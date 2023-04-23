@@ -2,13 +2,13 @@
   <div>
     <h1>Test data</h1>
     <ul>
-      <li v-for="item in informatie" :key="item.id">{{ item.locatie + item.leeftijd }}</li>
+      <li v-for="item in testData" :key="item.id">{{ item.name }}</li>
     </ul>
-    <p>{{ table.name }}</p>
   </div>
 </template>
 
 <script>
+import { fetchTestData } from '../data.js'
 export default {
   data() {
     return {
@@ -16,12 +16,9 @@ export default {
     }
   },
   mounted() {
-    fetch('http://localhost:3000/tests')
-      .then((response) => response.json())
-      .then((data) => {
-        this.testData = data
-      })
-      .catch((error) => console.error('Error fetching data: ', error))
+    fetchTestData().then((data) => {
+      this.testData = data
+    })
   }
 }
 </script>
