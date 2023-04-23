@@ -4,6 +4,7 @@
     <ul>
       <li v-for="item in informatie" :key="item.id">{{ item.locatie + item.leeftijd }}</li>
     </ul>
+    <p>{{ table.name }}</p>
   </div>
 </template>
 
