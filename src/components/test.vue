@@ -11,8 +11,7 @@
 export default {
   data() {
     return {
-      testData: [],
-      informatie: []
+      testData: []
     }
   },
   mounted() {
@@ -20,13 +19,6 @@ export default {
       .then((response) => response.json())
       .then((data) => {
         this.testData = data
-      })
-      .catch((error) => console.error('Error fetching data: ', error))
-
-    fetch('http://localhost:3000/test2')
-      .then((response) => response.json())
-      .then((data) => {
-        this.informatie = data
       })
       .catch((error) => console.error('Error fetching data: ', error))
   }
