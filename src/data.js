@@ -25,3 +25,23 @@ export const addTestData = (data) => {
     .then((response) => response.json())
     .catch((error) => console.error('Error adding data: ', error))
 }
+
+export const deleteTestData = (id) => {
+  return fetch(`http://localhost:3000/tests/${id}`, {
+    method: 'DELETE'
+  })
+    .then((response) => response.json())
+    .catch((error) => console.error('Error deleting data: ', error))
+}
+
+export const updateTestData = (id, data) => {
+  return fetch(`http://localhost:3000/tests/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then((response) => response.json())
+    .catch((error) => console.error('Error updating data: ', error))
+}

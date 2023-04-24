@@ -56,6 +56,33 @@ app.post('/tests', (req, res) => {
   })
 })
 
+app.delete('/tests/:id', (req, res) => {
+  const id = req.params.id
+  const query = 'DELETE FROM test WHERE id = ?'
+  connection.query(query, [id], (error, results) => {
+    if (error) {
+      console.error('Fout bij het verwijderen van de testgegevens: ', error)
+      res.status(500).send('Er is een fout opgetreden bij het verwijderen van de testgegevens.')
+    } else {
+      res.json({ message: 'Gegevens verwijderd.' })
+    }
+  })
+})
+
+app.put('/tests/:id', (req, res) => {
+  const id = req.params.id
+  const name = req.body.name
+  const query = 'UPDATE test SET name = ? WHERE id = ?'
+  connection.query(query, [name, id], (error, results) => {
+    if (error) {
+      console.error('Fout bij het bijwerken van de testgegevens: ', error)
+      res.status(500).send('Er is een fout opgetreden bij het bijwerken van de testgegevens.')
+    } else {
+      res.json({ message: 'Gegevens bijgewerkt.' })
+    }
+  })
+})
+
 app.get('/test2', (req, res) => {
   const query = 'SELECT * FROM test2'
   connection.query(query, (error, results) => {
