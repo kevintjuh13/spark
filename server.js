@@ -43,6 +43,19 @@ app.get('/tests', (req, res) => {
   })
 })
 
+app.post('/tests', (req, res) => {
+  const name = req.body.name
+  const query = `INSERT INTO test (name) VALUES (?)`
+  connection.query(query, [name], (error, results) => {
+    if (error) {
+      console.error('Fout bij het toevoegen van de testgegevens: ', error)
+      res.status(500).send('Er is een fout opgetreden bij het toevoegen van de testgegevens.')
+    } else {
+      res.json({ message: 'Gegevens toegevoegd.' })
+    }
+  })
+})
+
 app.get('/test2', (req, res) => {
   const query = 'SELECT * FROM test2'
   connection.query(query, (error, results) => {

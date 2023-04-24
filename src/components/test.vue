@@ -4,11 +4,12 @@
     <ul>
       <li v-for="item in testData" :key="item.id">{{ item.name }}</li>
     </ul>
+    <button @click="addTestData">click me</button>
   </div>
 </template>
 
 <script>
-import { fetchTestData } from '../data.js'
+import { fetchTestData, addTestData } from '../data.js'
 export default {
   data() {
     return {
@@ -19,6 +20,20 @@ export default {
     fetchTestData().then((data) => {
       this.testData = data
     })
+  },
+  methods: {
+    addTestData() {
+      addTestData({ name: 'Test' })
+        .then((data) => {
+          console.log('Data added: ', data)
+          fetchTestData().then((data) => {
+            this.testData = data
+          })
+        })
+        .catch((error) => {
+          console.error('Error adding data: ', error)
+        })
+    }
   }
 }
 </script>

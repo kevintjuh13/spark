@@ -13,3 +13,15 @@ export const test2 = () => {
     .then((response) => response.json())
     .catch((error) => console.error('Error fetching data: ', error))
 }
+
+export const addTestData = (data) => {
+  return fetch('http://localhost:3000/tests', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then((response) => response.json())
+    .catch((error) => console.error('Error adding data: ', error))
+}
