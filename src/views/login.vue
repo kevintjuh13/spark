@@ -2,8 +2,6 @@
   <div class="container">
     <div class="logo">
       <logo></logo>
-
-      <!-- <TestComponent></TestComponent> -->
     </div>
   </div>
 </template>
