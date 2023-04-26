@@ -16,9 +16,11 @@
     "express": "^4.18.2",
     "mysql": "^2.18.1",
     "mysql2": "^3.2.3",
+    "process": "^0.11.10",
     "safe-buffer": "^5.2.1",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6",
+    "vuelidate": "^0.7.7",
     "vuetify": "^3.1.14"
   },
   "devDependencies": {

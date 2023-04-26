@@ -9,6 +9,7 @@
       :disabled="disabled"
       :error="error"
       :error-messages="errorMessages"
+      :label="label"
       :id="id"
       :name="name"
       :placeholder="placeholder"
@@ -47,6 +48,9 @@ export default {
       default: () => []
     },
     id: {
+      type: String
+    },
+    label: {
       type: String
     },
     name: {
