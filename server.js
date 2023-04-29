@@ -72,19 +72,19 @@ app.get('/tests', (req, res) => {
   })
 })
 
-app.post('/users', (req, res) => {
-  const email = req.body.email
-  const password = req.body.password
-  const query = `INSERT INTO users (email, password) VALUES (?, ?)`
-  connection.query(query, [email, password], (error, results) => {
-    if (error) {
-      console.error('Error adding user:', error)
-      res.status(500).json({ error: 'There was an error adding the user.' })
-    } else {
-      res.json({ message: 'User added.' })
-    }
-  })
-})
+// app.post('/users', (req, res) => {
+//   const email = req.body.email
+//   const password = req.body.password
+//   const query = `INSERT INTO users (email, password) VALUES (?, ?)`
+//   connection.query(query, [email, password], (error, results) => {
+//     if (error) {
+//       console.error('Error adding user:', error)
+//       res.status(500).json({ error: 'There was an error adding the user.' })
+//     } else {
+//       res.json({ message: 'User added.' })
+//     }
+//   })
+// })
 
 app.delete('/tests/:id', (req, res) => {
   const id = req.params.id

@@ -81,6 +81,7 @@ export default {
       try {
         const savedUser = await addUser(user)
         console.log('User saved: ', savedUser)
+        this.$router.push('/firstname')
       } catch (error) {
         console.error('Error submitting form: ', error)
       }
