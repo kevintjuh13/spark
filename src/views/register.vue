@@ -4,44 +4,87 @@
       <logo></logo>
       <h1 class="mt-10">REGISTRATIE</h1>
     </div>
-    <form @submit.prevent="register">
+    <v-form @submit.prevent="submit">
       <div class="inputs">
-        <textField
+        <v-text-field
+          v-model="email"
           variant="solo"
           class="textfields"
           label="Email"
+          :rules="rulesEmail"
           placeholder="kev2000in@hotmail..."
-        ></textField>
-        <textField
+        ></v-text-field>
+        <v-text-field
+          v-model="password"
           variant="solo"
           class="textfields"
           label="Wachtwoord"
           type="password"
-          placeholder="kev2000in@hotmail..."
-        ></textField>
+          :rules="rulesPassword"
+          placeholder="********"
+        ></v-text-field>
       </div>
       <div class="registratie-knop">
         <myButton
           class="mr-2"
           style="background-color: black; color: white; font-size: 30px"
+          type="submit"
           icon
           buttonText=">"
         ></myButton>
       </div>
-    </form>
+    </v-form>
   </div>
 </template>
 
 <script>
+import { addUser } from '../data.js'
 import logo from '../components/logo/logo.vue'
-import textField from '../components/textfield.vue'
 import myButton from '../components/button.vue'
 
 export default {
   components: {
     logo,
-    myButton,
-    textField
+    myButton
+  },
+  data() {
+    return {
+      email: '',
+      password: '',
+      errorMessage: '',
+      rulesEmail: [
+        (value) => {
+          if (!value) return 'You must enter an email address'
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+          if (!emailRegex.test(value)) return 'Invalid email address'
+          return true
+        }
+      ],
+
+      rulesPassword: [
+        (value) => {
+          if (!value) return 'You must enter a password'
+          if (value.length < 8) return 'Password must be at least 8 characters'
+          if (value.length > 15) return 'Password must be no more than 15 characters'
+          return true
+        }
+      ]
+    }
+  },
+  methods: {
+    async submit() {
+      const user = {
+        email: this.email,
+        password: this.password
+      }
+      console.log('Submitting user: ', user)
+      try {
+        const savedUser = await addUser(user)
+        console.log('User saved: ', savedUser)
+      } catch (error) {
+        console.error('Error submitting form: ', error)
+      }
+    }
   }
 }
 </script>

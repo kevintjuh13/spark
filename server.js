@@ -30,6 +30,35 @@ connection.connect((err) => {
   }
 })
 
+app.get('/users', (req, res) => {
+  const query = 'SELECT * FROM users'
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Fout bij het ophalen van de gebruikersgegevens: ', error)
+      res.status(500).send('Er is een fout opgetreden bij het ophalen van de gebruikersgegevens.')
+    } else {
+      res.json(results)
+    }
+  })
+})
+
+app.post('/users', (req, res) => {
+  const email = req.body.email
+  const password = req.body.password
+  console.log('Received user data: ', email, password)
+  const query = `INSERT INTO users (email, password) VALUES (?, ?)`
+  connection.query(query, [email, password], (error, results) => {
+    if (error) {
+      console.error('Fout bij het toevoegen van de gebruiker: ', error)
+      res
+        .status(500)
+        .json({ error: 'Er is een fout opgetreden bij het toevoegen van de gebruiker.' })
+    } else {
+      res.json({ message: 'Gebruiker toegevoegd.' })
+    }
+  })
+})
+
 // Definieer een API endpoint om alle testgegevens uit de database op te halen
 app.get('/tests', (req, res) => {
   const query = 'SELECT * FROM test'
@@ -43,15 +72,16 @@ app.get('/tests', (req, res) => {
   })
 })
 
-app.post('/tests', (req, res) => {
-  const name = req.body.name
-  const query = `INSERT INTO test (name) VALUES (?)`
-  connection.query(query, [name], (error, results) => {
+app.post('/users', (req, res) => {
+  const email = req.body.email
+  const password = req.body.password
+  const query = `INSERT INTO users (email, password) VALUES (?, ?)`
+  connection.query(query, [email, password], (error, results) => {
     if (error) {
-      console.error('Fout bij het toevoegen van de testgegevens: ', error)
-      res.status(500).send('Er is een fout opgetreden bij het toevoegen van de testgegevens.')
+      console.error('Error adding user:', error)
+      res.status(500).json({ error: 'There was an error adding the user.' })
     } else {
-      res.json({ message: 'Gegevens toegevoegd.' })
+      res.json({ message: 'User added.' })
     }
   })
 })

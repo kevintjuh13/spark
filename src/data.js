@@ -45,3 +45,21 @@ export const updateTestData = (id, data) => {
     .then((response) => response.json())
     .catch((error) => console.error('Error updating data: ', error))
 }
+
+// bekijkt of the email die ingevoerd is al bestaat
+
+export const addUser = (user) => {
+  console.log('Adding user:', user)
+  return fetch(`http://localhost:3000/users`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(user)
+  })
+    .then((response) => {
+      console.log('Response from adding user:', response)
+      return response.json()
+    })
+    .catch((error) => console.error('Error adding user:', error))
+}
