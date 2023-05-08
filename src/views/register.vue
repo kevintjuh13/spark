@@ -31,6 +31,7 @@
           type="submit"
           icon
           buttonText=">"
+          :disabled="!isFormValid"
         ></myButton>
       </div>
     </v-form>
@@ -54,21 +55,29 @@ export default {
       errorMessage: '',
       rulesEmail: [
         (value) => {
-          if (!value) return 'You must enter an email address'
+          if (!value) return 'Voer een email in'
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-          if (!emailRegex.test(value)) return 'Invalid email address'
+          if (!emailRegex.test(value)) return 'Email is ongeldig'
           return true
         }
       ],
 
       rulesPassword: [
         (value) => {
-          if (!value) return 'You must enter a password'
-          if (value.length < 8) return 'Password must be at least 8 characters'
-          if (value.length > 15) return 'Password must be no more than 15 characters'
+          if (!value) return 'Voor een wachtwoord in'
+          if (value.length < 8) return 'Wachtwoord moet 8 karakters lang zijn'
+          if (value.length > 15) return 'Wachtwoord moet minder dan 15 karakters lang zijn'
           return true
         }
       ]
+    }
+  },
+  computed: {
+    isFormValid() {
+      return (
+        this.rulesEmail.every((rule) => rule(this.email) === true) &&
+        this.rulesPassword.every((rule) => rule(this.password) === true)
+      )
     }
   },
   methods: {
