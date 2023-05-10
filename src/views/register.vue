@@ -2,7 +2,7 @@
   <div class="container">
     <div class="logo">
       <logo></logo>
-      <h1 class="mt-10">REGISTRATIE</h1>
+      <h1 class="mt-10 title">REGISTRATIE</h1>
     </div>
     <v-form @submit.prevent="submit">
       <div class="inputs">
@@ -101,36 +101,76 @@ export default {
 
 <style scoped>
 @import url(../style.css);
-.textfields {
-  width: 220px;
-}
+@media only screen and (min-width: 768px) {
+  /* CSS styles for tablet devices */
+  .textfields {
+    width: 250px;
+  }
 
-.registratie-knop {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 10%;
-  margin-top: 200px !important;
+  .registratie-knop {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 10%;
+    margin-top: 100px !important;
+  }
+  .inputs {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+  }
+  .title {
+    font-size: 40px;
+  }
+  .logo {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .container {
+    font-family: Quicksand-Bold;
+    height: 100vh;
+    background-color: #f9cd52;
+  }
 }
-.inputs {
-  width: 100%;
-  height: 40%;
-  display: flex;
-  /* justify-content: center; */
-  align-items: center;
-  flex-direction: column;
-}
-.logo {
-  width: 100%;
-  height: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.container {
-  font-family: Quicksand-Bold;
-  height: 100vh;
-  background-color: #f9cd52;
+@media only screen and (max-width: 450px) {
+  .textfields {
+    width: 220px;
+  }
+
+  .registratie-knop {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 10%;
+    margin-top: 100px !important;
+  }
+  .inputs {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+  }
+  .logo {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .container {
+    font-family: Quicksand-Bold;
+    height: 100vh;
+    background-color: #f9cd52;
+  }
 }
 </style>
