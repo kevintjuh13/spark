@@ -3,6 +3,8 @@ import Login from '../views/Login.vue'
 import register from '../views/register.vue'
 import firstname from '../views/register/firstname.vue'
 import testfile from '../views/testing/testfile.vue'
+import age from '../views/register/age.vue'
+import intresses from '../views/register/intresses.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,11 +24,16 @@ const router = createRouter({
       name: 'firstname',
       component: firstname
     },
-    // {
-    //   path: '/age',
-    //   name: 'age',
-    //   component: age
-    // },
+    {
+      path: '/age',
+      name: 'age',
+      component: age
+    },
+    {
+      path: '/intresses',
+      name: 'intresses',
+      component: intresses
+    },
     // {
     //   path: '/height',
     //   name: 'height',

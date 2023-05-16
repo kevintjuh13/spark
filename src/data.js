@@ -6,7 +6,11 @@ export const fetchTestData = () => {
     .then((response) => response.json())
     .catch((error) => console.error('Error fetching data: ', error))
 }
-
+export const fetchOpties = () => {
+  return fetch('http://localhost:3000/intresses')
+    .then((response) => response.json())
+    .catch((error) => console.error('Error fetching data: ', error))
+}
 // Dit is een tweede test table
 export const test2 = () => {
   return fetch('http://localhost:3000/test2')

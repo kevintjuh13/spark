@@ -30,6 +30,7 @@ connection.connect((err) => {
   }
 })
 
+// USERS table
 app.get('/users', (req, res) => {
   const query = 'SELECT * FROM users'
   connection.query(query, (error, results) => {
@@ -59,7 +60,20 @@ app.post('/users', (req, res) => {
   })
 })
 
-// Definieer een API endpoint om alle testgegevens uit de database op te halen
+// INTRESSE TABLE
+app.get('/intresses', (req, res) => {
+  const query = 'SELECT * FROM intresses'
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Fout bij het ophalen van de intresses: ', error)
+      res.status(500).send('Er is een fout opgetreden bij het ophalen van de intresses.')
+    } else {
+      res.json(results)
+    }
+  })
+})
+
+// TEST TABLES
 app.get('/tests', (req, res) => {
   const query = 'SELECT * FROM test'
   connection.query(query, (error, results) => {
