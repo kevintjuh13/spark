@@ -3,11 +3,24 @@
     <v-progress-linear model-value="45"></v-progress-linear>
     <div class="mt-16 sub-container">
       <h1 class="mb-2 title">INTRESSES</h1>
-      <h5 class="mb-5 sub-title">Kies hier uit maximaal 5 intresses!</h5>
+      <h5 class="mb-5 sub-title">Kies hier uit maximaal 5 interesses!</h5>
       <div class="chips-container">
-        <v-chip v-for="optie in opties" :key="optie.id" class="mb-4 ml-1 chips">{{
-          optie.optie
-        }}</v-chip>
+        <v-chip-group class="chips-sub-container" column multiple>
+          <v-chip
+            v-for="optie in opties"
+            :key="optie.id"
+            :disabled="isDisabled(optie)"
+            variant="outlined"
+            class="mb-4 ml-1 chips"
+            :selected="isSelected(optie)"
+            @click="toggleOption(optie)"
+          >
+            {{ optie.optie }}
+          </v-chip>
+        </v-chip-group>
+        <p v-if="showError" class="error-message">
+          Maximaal 5 interesses kunnen worden geselecteerd.
+        </p>
       </div>
     </div>
     <div class="registratie-knop">
@@ -21,6 +34,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import myButton from '../../components/button.vue'
 import { fetchOpties } from '../../data.js'
@@ -31,13 +45,39 @@ export default {
   },
   data() {
     return {
-      opties: []
+      opties: [],
+      selectedOptions: []
     }
   },
+
   mounted() {
     this.fetchOpties()
   },
+
   methods: {
+    isSelected(optie) {
+      return this.selectedOptions.includes(optie.optie)
+    },
+
+    isDisabled(optie) {
+      return !this.isSelected(optie) && this.selectedOptions.length >= 5
+    },
+
+    toggleOption(optie) {
+      if (this.isSelected(optie)) {
+        // Deselect the option
+        this.selectedOptions = this.selectedOptions.filter((selected) => selected !== optie.optie)
+      } else {
+        // Check if the maximum limit has been reached
+        if (this.selectedOptions.length < 5) {
+          // Select the option
+          this.selectedOptions.push(optie.optie)
+        }
+      }
+
+      console.log('Selected chips:', this.selectedOptions)
+    },
+
     fetchOpties() {
       fetchOpties()
         .then((data) => {
@@ -61,7 +101,7 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  height: 35%;
+  height: 22%;
 }
 .sub-container {
   display: flex;
@@ -83,10 +123,19 @@ export default {
   justify-content: center;
   flex-wrap: wrap;
 }
+.chips-sub-container {
+  display: flex;
+  justify-content: center;
+}
 
 .chip {
   margin-right: 10px;
   margin-bottom: 10px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
 
 /* Add additional styles as needed */

@@ -5,6 +5,7 @@ import firstname from '../views/register/firstname.vue'
 import testfile from '../views/testing/testfile.vue'
 import age from '../views/register/age.vue'
 import intresses from '../views/register/intresses.vue'
+import geslacht from '../views/register/geslacht.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +34,11 @@ const router = createRouter({
       path: '/intresses',
       name: 'intresses',
       component: intresses
+    },
+    {
+      path: '/geslacht',
+      name: 'geslacht',
+      component: geslacht
     },
     // {
     //   path: '/height',
