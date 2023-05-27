@@ -84,13 +84,17 @@ export default {
     async submit() {
       const user = {
         email: this.email,
-        password: this.password
+        password: this.password,
+        name: ''
       }
       console.log('Submitting user: ', user)
       try {
         const savedUser = await addUser(user)
         console.log('User saved: ', savedUser)
-        this.$router.push('/firstname')
+        this.$router.push({
+          path: '/firstname',
+          query: { name: user.name, id: savedUser.id }
+        })
       } catch (error) {
         console.error('Error submitting form: ', error)
       }

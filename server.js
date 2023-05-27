@@ -50,12 +50,27 @@ app.post('/users', (req, res) => {
   const query = `INSERT INTO users (email, password) VALUES (?, ?)`
   connection.query(query, [email, password], (error, results) => {
     if (error) {
-      console.error('Fout bij het toevoegen van de gebruiker: ', error)
-      res
-        .status(500)
-        .json({ error: 'Er is een fout opgetreden bij het toevoegen van de gebruiker.' })
+      console.error('Error adding user: ', error)
+      res.status(500).json({ error: 'Error adding user.' })
     } else {
-      res.json({ message: 'Gebruiker toegevoegd.' })
+      const userId = results.insertId
+      res.json({ id: userId, message: 'User added.' })
+    }
+  })
+})
+
+app.put('/users/:id', (req, res) => {
+  const id = req.params.id
+  const name = req.body.name
+  const age = req.body.age
+  const gender = req.body.gender
+  const query = 'UPDATE users SET name = ?, age = ?, gender = ? WHERE id = ?'
+  connection.query(query, [name, age, gender, id], (error, results) => {
+    if (error) {
+      console.error('Error updating user:', error)
+      res.status(500).json({ error: 'There was an error updating the user.' })
+    } else {
+      res.json({ message: 'User updated.' })
     }
   })
 })

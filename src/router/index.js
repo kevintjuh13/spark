@@ -6,6 +6,8 @@ import testfile from '../views/testing/testfile.vue'
 import age from '../views/register/age.vue'
 import intresses from '../views/register/intresses.vue'
 import geslacht from '../views/register/geslacht.vue'
+import datesTonen from '../views/register/datesTonen.vue'
+import foto from '../views/register/foto.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +41,16 @@ const router = createRouter({
       path: '/geslacht',
       name: 'geslacht',
       component: geslacht
+    },
+    {
+      path: '/datesTonen',
+      name: 'datesTonen',
+      component: datesTonen
+    },
+    {
+      path: '/foto',
+      name: 'foto',
+      component: foto
     },
     // {
     //   path: '/height',

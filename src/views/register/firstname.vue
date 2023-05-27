@@ -4,7 +4,7 @@
     <div class="mt-16 sub-container">
       <h1 class="mb-2 title">VOORNAAM</h1>
       <h5 class="mb-5 sub-title">Wat is je voornaam?</h5>
-      <v-text-field class="textField" label="Voornaam" variant="solo"></v-text-field>
+      <v-text-field class="textField" label="Voornaam" variant="solo" v-model="name"></v-text-field>
     </div>
     <div class="registratie-knop">
       <myButton
@@ -13,16 +13,45 @@
         type="submit"
         icon
         buttonText=">"
+        @click="submit"
       ></myButton>
     </div>
   </div>
 </template>
+
 <script>
 import myButton from '../../components/button.vue'
+import { updateUserData } from '../../data.js'
 export default {
-  components: { myButton }
+  components: { myButton },
+  data() {
+    return {
+      name: this.$route.query.name || ''
+    }
+  },
+  methods: {
+    async submit() {
+      const id = this.$route.query.id
+      const user = {
+        name: this.name,
+        id: id
+      }
+      console.log('Submitting user: ', user)
+      try {
+        const updatedUser = await updateUserData(user)
+        console.log('User updated: ', updatedUser)
+        this.$router.push({
+          path: '/age',
+          query: { name: this.name, id: id }
+        })
+      } catch (error) {
+        console.error('Error updating user: ', error)
+      }
+    }
+  }
 }
 </script>
+
 <style scoped>
 .container {
   font-family: Quicksand-Bold;

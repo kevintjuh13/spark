@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+// import Uploader from 'vue-media-upload'
 
 // Vuetify
 import 'vuetify/dist/vuetify.min.css'
@@ -14,6 +15,8 @@ const vuetify = createVuetify({
 })
 
 const app = createApp(App)
+// app.component('Uploader', Uploader)
 app.use(vuetify)
 app.use(router)
+
 app.mount('#app')

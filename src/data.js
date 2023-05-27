@@ -67,3 +67,21 @@ export const addUser = (user) => {
     })
     .catch((error) => console.error('Error adding user:', error))
 }
+export const updateUserData = (user) => {
+  return fetch(`http://localhost:3000/users/${user.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: user.name,
+      age: user.age,
+      gender: user.gender
+    })
+  })
+    .then((response) => {
+      console.log('Response from updating user data:', response)
+      return response.json()
+    })
+    .catch((error) => console.error('Error updating user data: ', error))
+}
