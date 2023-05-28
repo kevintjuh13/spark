@@ -8,6 +8,7 @@ import intresses from '../views/register/intresses.vue'
 import geslacht from '../views/register/geslacht.vue'
 import datesTonen from '../views/register/datesTonen.vue'
 import foto from '../views/register/foto.vue'
+import homePage from '../views/homePage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,11 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: register
+    },
+    {
+      path: '/homePage',
+      name: 'homePage',
+      component: homePage
     },
     {
       path: '/firstname',
