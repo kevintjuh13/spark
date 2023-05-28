@@ -61,11 +61,10 @@ app.post('/users', (req, res) => {
 
 app.put('/users/:id', (req, res) => {
   const id = req.params.id
-  const name = req.body.name
-  const age = req.body.age
-  const gender = req.body.gender
-  const query = 'UPDATE users SET name = ?, age = ?, gender = ? WHERE id = ?'
-  connection.query(query, [name, age, gender, id], (error, results) => {
+  const { name, age, gender, show, interest } = req.body // Use object destructuring to extract the values
+  const query =
+    'UPDATE users SET name = ?, age = ?, gender = ?, `show` = ?, interest = ? WHERE id = ?' // Wrap `show` with backticks
+  connection.query(query, [name, age, gender, show, interest, id], (error, results) => {
     if (error) {
       console.error('Error updating user:', error)
       res.status(500).json({ error: 'There was an error updating the user.' })

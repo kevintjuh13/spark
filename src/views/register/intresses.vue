@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <v-progress-linear model-value="45"></v-progress-linear>
+    <v-progress-linear model-value="75"></v-progress-linear>
     <div class="mt-16 sub-container">
       <h1 class="mb-2 title">INTRESSES</h1>
       <h5 class="mb-5 sub-title">Kies hier uit maximaal 5 interesses!</h5>
@@ -30,6 +30,7 @@
         type="submit"
         icon
         buttonText=">"
+        @click="submitInterests"
       ></myButton>
     </div>
   </div>
@@ -37,7 +38,7 @@
 
 <script>
 import myButton from '../../components/button.vue'
-import { fetchOpties } from '../../data.js'
+import { fetchOpties, updateUserData } from '../../data.js'
 
 export default {
   components: {
@@ -46,7 +47,8 @@ export default {
   data() {
     return {
       opties: [],
-      selectedOptions: []
+      selectedOptions: [],
+      showError: false
     }
   },
 
@@ -72,6 +74,8 @@ export default {
         if (this.selectedOptions.length < 5) {
           // Select the option
           this.selectedOptions.push(optie.optie)
+        } else {
+          this.showError = true
         }
       }
 
@@ -86,6 +90,35 @@ export default {
         .catch((error) => {
           console.error(error)
         })
+    },
+
+    submitInterests() {
+      if (this.selectedOptions.length > 0) {
+        const id = this.$route.query.id
+        const name = this.$route.query.name
+        const age = this.$route.query.age
+        const gender = this.$route.query.gender
+        const show = this.$route.query.show // Fixed variable name
+
+        const user = {
+          id: id,
+          name: name,
+          age: age,
+          gender: gender,
+          show: show, // Fixed variable name
+          interest: this.selectedOptions.join(', ')
+        }
+
+        updateUserData(user)
+          .then((response) => {
+            console.log('User interests updated:', response)
+            // Handle the response as needed
+          })
+          .catch((error) => {
+            console.error('Error updating user interests:', error)
+            // Handle the error as needed
+          })
+      }
     }
   }
 }

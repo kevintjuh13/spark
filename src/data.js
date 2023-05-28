@@ -73,15 +73,11 @@ export const updateUserData = (user) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      name: user.name,
-      age: user.age,
-      gender: user.gender
-    })
+    body: JSON.stringify(user) // Pass the user object directly as the request body
   })
     .then((response) => {
       console.log('Response from updating user data:', response)
       return response.json()
     })
-    .catch((error) => console.error('Error updating user data: ', error))
+    .catch((error) => console.error('Error updating user data:', error))
 }

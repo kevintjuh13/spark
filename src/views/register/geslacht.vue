@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <v-progress-linear model-value="60"></v-progress-linear>
+    <v-progress-linear model-value="45"></v-progress-linear>
     <div class="mt-16 sub-container">
       <h1 class="mb-2 title">Geslacht</h1>
       <h5 class="mb-5 sub-title">Ben je een man of een vrouw?</h5>
@@ -41,7 +41,7 @@ export default {
   components: { myButton },
   data() {
     return {
-      selectedGender: null,
+      selectedGender: 0, // Initialize with the index of the default selected gender
       genders: ['Man', 'Vrouw']
     }
   },
@@ -49,23 +49,26 @@ export default {
   methods: {
     async submit() {
       const id = this.$route.query.id
+      const name = this.$route.query.name
+      const age = this.$route.query.age
+      const gender = this.genders[this.selectedGender]
       const user = {
         id: id,
-        name: this.$route.query.name,
-        age: this.$route.query.age,
-        gender: this.genders[this.selectedGender]
+        name: name,
+        age: age,
+        gender: gender
       }
       console.log('Submitting user:', user)
       try {
-        const updatedUser = await updateUserData(id, user)
+        const updatedUser = await updateUserData(user)
         console.log('User updated:', updatedUser)
         this.$router.push({
-          path: '/geslacht',
+          path: '/datesTonen',
           query: {
-            name: this.name,
+            name: name,
             id: id,
-            age: this.age,
-            gender: this.genders[this.selectedGender]
+            age: age,
+            gender: gender
           }
         })
       } catch (error) {
