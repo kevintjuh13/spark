@@ -1,9 +1,12 @@
 <template>
   <div class="container">
     <div class="top-bar">
-      <v-icon class="mt-10 ml-10" size="30" icon="fas fa-search" />
+      <v-icon class="mt-10 ml-10" size="30" icon="fas fa-search" @click="toggleSearch" />
       <h1 class="ml-5 mt-8" style="font-size: 35px">Dates</h1>
       <v-avatar class="mt-8 mr-10" color="surface-variant" size="45"></v-avatar>
+    </div>
+    <div class="searchBar" :class="{ active: showSearchBar }">
+      <input type="text" placeholder="Search" />
     </div>
     <v-row class="mt-10 content">
       <v-col class="sub-content" cols="12" sm="6" md="6" lg="4" v-for="index in 3" :key="index">
@@ -23,7 +26,9 @@
         </v-card>
       </v-col>
     </v-row>
-    <navbar></navbar>
+    <div class="navbar-container">
+      <navbar class="navbar"></navbar>
+    </div>
   </div>
 </template>
 
@@ -35,16 +40,47 @@ export default {
     navbar
   },
   data() {
-    return {}
+    return {
+      showSearchBar: false
+    }
+  },
+  methods: {
+    toggleSearch() {
+      this.showSearchBar = !this.showSearchBar
+    }
   }
 }
 </script>
 
 <style scoped>
 .container {
+  position: relative;
   font-family: Quicksand-Bold;
-  height: 100vh;
+  height: fit-content;
   background-color: #f9f6f6;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 0;
+  opacity: 0;
+  width: 250px;
+  transition: height 0.3s, opacity 0.3s;
+  background-color: white;
+  border-radius: 20px;
+  padding: 5px;
+  margin: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.searchBar.active {
+  height: 50px;
+  opacity: 1;
 }
 .sub-content {
   display: flex;
@@ -94,5 +130,12 @@ export default {
   object-fit: cover;
   width: 100%;
   height: 100%;
+}
+.navbar-container {
+  position: fixed;
+  bottom: 0;
+  left: 42%;
+  transform: translateX(-50%);
+  z-index: 999; /* Adjust as needed */
 }
 </style>

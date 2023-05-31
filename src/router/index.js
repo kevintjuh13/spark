@@ -9,6 +9,7 @@ import geslacht from '../views/register/geslacht.vue'
 import datesTonen from '../views/register/datesTonen.vue'
 import foto from '../views/register/foto.vue'
 import homePage from '../views/homePage.vue'
+import dateInfo from '../views/dates/dateInfo.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,11 @@ const router = createRouter({
       path: '/homePage',
       name: 'homePage',
       component: homePage
+    },
+    {
+      path: '/dateInfo',
+      name: 'dateInfo',
+      component: dateInfo
     },
     {
       path: '/firstname',
