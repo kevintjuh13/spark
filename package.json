@@ -27,7 +27,7 @@
     "vue-media-upload": "^2.1.2",
     "vue-router": "^4.1.6",
     "vuelidate": "^0.7.7",
-    "vuetify": "^3.1.14"
+    "vuetify": "^3.3.2"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
@@ -36,6 +36,7 @@
     "eslint": "^8.34.0",
     "eslint-plugin-vue": "^9.9.0",
     "prettier": "^2.8.4",
-    "vite": "^4.3.1"
+    "vite": "^4.3.1",
+    "vite-plugin-vuetify": "^1.0.2"
   }
 }

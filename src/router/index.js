@@ -10,6 +10,9 @@ import datesTonen from '../views/register/datesTonen.vue'
 import foto from '../views/register/foto.vue'
 import homePage from '../views/homePage.vue'
 import dateInfo from '../views/dates/dateInfo.vue'
+import awaiting from '../views/dates/awaiting.vue'
+import myProfile from '../views/myProfile.vue'
+import postDate from '../views/dates/postDate.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +36,21 @@ const router = createRouter({
       path: '/dateInfo',
       name: 'dateInfo',
       component: dateInfo
+    },
+    {
+      path: '/awaiting',
+      name: 'awaiting',
+      component: awaiting
+    },
+    {
+      path: '/myProfile',
+      name: 'myProfile',
+      component: myProfile
+    },
+    {
+      path: '/postDate',
+      name: 'postDate',
+      component: postDate
     },
     {
       path: '/firstname',

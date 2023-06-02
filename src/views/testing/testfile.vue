@@ -1,9 +1,9 @@
 <template>
   <div>
     <!-- <myButton size="large" width="200" rounded="xl" buttonText="hey"></myButton>
-    <textfield></textfield>
-    <test></test> -->
-    <navbar></navbar>
+    <textfield></textfield> -->
+    <test></test>
+    <!-- <navbar></navbar> -->
   </div>
 </template>
 <script>
