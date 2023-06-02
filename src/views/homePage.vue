@@ -29,9 +29,24 @@
 
     <div class="navbar-container">
       <div class="ml-10 filter">
-        <v-avatar size="50" color="black">
-          <v-icon icon="fas fa-bars" color="white"></v-icon>
-        </v-avatar>
+        <v-dialog v-model="dialogVisible" persistent max-width="400">
+          <template v-slot:activator="{ on }">
+            <v-avatar size="50" color="black" v-on="on" @click="openDialog">
+              <v-icon icon="fas fa-bars" color="white"></v-icon>
+            </v-avatar>
+          </template>
+          <v-card>
+            <v-card-title>
+              <span class="headline">Sorteren op</span>
+            </v-card-title>
+            <v-card-text>
+              <v-select v-model="selectedOption" :items="options" label="Sorteren op"></v-select>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn color="#f9cd52" text @click="dialogVisible = false">Close</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
       <navbar class="navbar"></navbar>
     </div>
@@ -47,12 +62,18 @@ export default {
   },
   data() {
     return {
-      showSearchBar: false
+      showSearchBar: false,
+      dialogVisible: false,
+      selectedOption: null,
+      options: ['Naam', 'Leeftijd', 'Geen']
     }
   },
   methods: {
     toggleSearch() {
       this.showSearchBar = !this.showSearchBar
+    },
+    openDialog() {
+      this.dialogVisible = true
     }
   }
 }
