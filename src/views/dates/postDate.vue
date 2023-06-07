@@ -8,7 +8,12 @@
       <v-card class="card" width="350" height="700">
         <div class="naam-container">
           <v-card-title>Naam date:</v-card-title>
-          <v-text-field class="textfield" label="Naam Date" variant="solo"></v-text-field>
+          <v-text-field
+            v-model="naamDate"
+            class="textfield"
+            label="Naam Date"
+            variant="solo"
+          ></v-text-field>
           <v-card-title>Meer info</v-card-title>
           <v-row class="mt-2">
             <v-icon class="mr-5 mt-5" color="#f9cd52" icon="fas fa-calendar" size="20"></v-icon>
@@ -41,17 +46,31 @@
             ></v-autocomplete>
           </v-row>
           <v-card-title>Beschrijving</v-card-title>
-          <v-textarea placeholder="Type hier..." rows="4" variant="solo"></v-textarea>
-          <v-btn class="btn" width="175" height="40" color="#f9cd52" rounded>Post</v-btn>
+          <v-textarea
+            v-model="beschrijvingDate"
+            placeholder="Type hier..."
+            rows="4"
+            variant="solo"
+          ></v-textarea>
+          <router-link to="/homePage">
+            <v-btn @click="postDate" class="btn" width="175" height="40" color="#f9cd52" rounded
+              >Post</v-btn
+            >
+          </router-link>
         </div>
       </v-card>
     </v-flex>
   </div>
 </template>
+
 <script>
+import { addDate } from '../../data.js'
+
 export default {
   data() {
     return {
+      userId: null, // Add userId to the component's data
+      naamDate: '',
       selectedDate: null,
       selectedTime: null,
       dates: ['Ma 12 jun', 'Di 13 jun', 'Woe 14 jun', 'Do 15 jun', 'Vr 16 jun'],
@@ -71,18 +90,13 @@ export default {
         'Dorst',
         'Roosendaal',
         'Goirle',
-        'Etten-Leur',
+        'Den Haag',
+        'Amsterdam',
         'Rotterdam',
-        'Zaltbommel',
-        'Drunen',
-        'Vught',
-        'Boxtel',
-        'Schijndel',
-        'Hilvarenbeek',
-        'Baarle-Nassau',
-        'Bavel',
-        'Oosterhout'
-      ]
+        'Utrecht',
+        'Maastricht'
+      ],
+      beschrijvingDate: ''
     }
   },
   computed: {
@@ -94,9 +108,34 @@ export default {
       }
       return timeArray
     }
+  },
+  created() {
+    // Retrieve the user ID from the URL query parameters
+    this.userId = this.$route.query.userId
+    // Use the user ID as needed
+  },
+
+  methods: {
+    async postDate() {
+      const date = {
+        userId: this.userId, // Use the userId obtained from the URL query parameters
+        naamDate: this.naamDate,
+        datumDate: this.selectedDate,
+        tijdDate: this.selectedTime,
+        locatieDate: this.selectedLocation,
+        beschrijvingDate: this.beschrijvingDate
+      }
+      try {
+        const savedDate = await addDate(date)
+        console.log('Date saved: ', savedDate)
+      } catch (error) {
+        console.error('Error posting date: ', error)
+      }
+    }
   }
 }
 </script>
+
 <style scoped>
 .container {
   position: relative;

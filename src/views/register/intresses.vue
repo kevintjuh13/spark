@@ -112,7 +112,11 @@ export default {
         updateUserData(user)
           .then((response) => {
             console.log('User interests updated:', response)
-            // Handle the response as needed
+            // Navigate to the home page and pass the user data as query parameters
+            this.$router.push({
+              name: 'homePage',
+              query: user
+            })
           })
           .catch((error) => {
             console.error('Error updating user interests:', error)

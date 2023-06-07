@@ -5,13 +5,13 @@
       <h1 class="title mt-8" style="font-size: 35px">Date Info</h1>
     </div>
     <v-flex class="d-flex justify-center align-center mt-10">
-      <v-card width="350" height="750" class="card">
+      <v-card width="350" height="750" class="card" v-if="dateInfo">
         <v-card-text class="text-center">
           <v-avatar color="black" size="80"></v-avatar>
         </v-card-text>
-        <v-card-title class="text-center">Thijs</v-card-title>
-        <v-card-title class="text-center">22</v-card-title>
-        <v-card-title class="text-center">Netflix & chill</v-card-title>
+        <v-card-title class="text-center">{{ dateInfo.user.name }}</v-card-title>
+        <v-card-title class="text-center">{{ dateInfo.user.age }}</v-card-title>
+        <v-card-title class="text-center">{{ dateInfo.name }}</v-card-title>
         <v-flex class="sub-container">
           <v-row class="mx-2 my-1">
             <v-icon class="ml-10 mt-8" color="#f9cd52" icon="fas fa-calendar"></v-icon>
@@ -28,8 +28,8 @@
           <v-card-title class="text-center">Beschrijving</v-card-title>
           <v-card-subtitle class="text-center">
             <textarea class="textArea" rows="6" readonly>
-Hey, dit is een test en ik wil dat die begint op een nieuwe regel begint elke keer als ik type en iets vertel  </textarea
-            >
+Hey, dit is een test en ik wil dat die begint op een nieuwe regel begint elke keer als ik type en iets vertel
+            </textarea>
           </v-card-subtitle>
           <v-card-title class="text-center">
             <v-btn class="btn" width="175" height="40" color="#f9cd52" rounded>Aanmelden</v-btn>
@@ -41,13 +41,30 @@ Hey, dit is een test en ik wil dat die begint op een nieuwe regel begint elke ke
 </template>
 
 <script>
+import { getDateById } from '../../data.js'
+
 export default {
   data() {
     return {
-      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10),
-      menu2: false
+      dateInfo: null
+    }
+  },
+  mounted() {
+    const dateId = this.$route.query.dateId // Get the dateId from the query parameters
+    this.fetchDateInfo(dateId)
+  },
+  methods: {
+    fetchDateInfo(dateId) {
+      // You need to implement the logic to fetch the date information using the dateId
+      // You can use the getDateById function from '../data.js' or any other method to fetch the data
+      // Example:
+      getDateById(dateId)
+        .then((dateInfo) => {
+          this.dateInfo = dateInfo
+        })
+        .catch((error) => {
+          console.error('Error fetching date info:', error)
+        })
     }
   }
 }

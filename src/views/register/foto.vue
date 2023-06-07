@@ -13,14 +13,23 @@
         type="submit"
         icon
         buttonText=">"
+        @click="submit"
       ></myButton>
     </div>
   </div>
 </template>
+
 <script>
 import myButton from '../../components/button.vue'
+
 export default {
-  components: { myButton }
+  components: { myButton },
+  methods: {
+    submit() {
+      // Handle any necessary logic before redirecting to the home page
+      this.$router.push('/homePage')
+    }
+  }
 }
 </script>
 <style scoped>

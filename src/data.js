@@ -1,53 +1,11 @@
 // Hier export ik mijn databases, om te gebruiken in mijn components met gebruik van fetch()
 
 // Dit is een test table
-export const fetchTestData = () => {
-  return fetch('http://localhost:3000/tests')
-    .then((response) => response.json())
-    .catch((error) => console.error('Error fetching data: ', error))
-}
+
 export const fetchOpties = () => {
   return fetch('http://localhost:3000/intresses')
     .then((response) => response.json())
     .catch((error) => console.error('Error fetching data: ', error))
-}
-// Dit is een tweede test table
-export const test2 = () => {
-  return fetch('http://localhost:3000/test2')
-    .then((response) => response.json())
-    .catch((error) => console.error('Error fetching data: ', error))
-}
-
-export const addTestData = (data) => {
-  return fetch('http://localhost:3000/tests', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-    .then((response) => response.json())
-    .catch((error) => console.error('Error adding data: ', error))
-}
-
-export const deleteTestData = (id) => {
-  return fetch(`http://localhost:3000/tests/${id}`, {
-    method: 'DELETE'
-  })
-    .then((response) => response.json())
-    .catch((error) => console.error('Error deleting data: ', error))
-}
-
-export const updateTestData = (id, data) => {
-  return fetch(`http://localhost:3000/tests/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-    .then((response) => response.json())
-    .catch((error) => console.error('Error updating data: ', error))
 }
 
 // bekijkt of the email die ingevoerd is al bestaat
@@ -80,4 +38,149 @@ export const updateUserData = (user) => {
       return response.json()
     })
     .catch((error) => console.error('Error updating user data:', error))
+}
+
+export const addDate = (date) => {
+  console.log('Adding date:', date)
+  return fetch(`http://localhost:3000/dates`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(date) // Use the date object directly
+  })
+    .then((response) => {
+      console.log('Response from adding date:', response)
+      return response.json()
+    })
+    .catch((error) => console.error('Error adding date:', error))
+}
+
+export const getDates = () => {
+  return fetch('http://localhost:3000/dates')
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Error fetching dates')
+      }
+      return response.json()
+    })
+    .then((data) => {
+      const datePromises = data.map((date) => {
+        // Fetch the user data using the userId
+        return fetch(`http://localhost:3000/users/${date.userId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Error fetching user')
+            }
+            return response.json()
+          })
+          .then((userData) => {
+            // Combine the date and user data
+            return {
+              id: date.id,
+              user: {
+                id: date.userId,
+                name: userData.name, // Update this with the appropriate user name property
+                age: userData.age // Update this with the appropriate user age property
+              },
+              name: date.naamDate,
+              description: date.beschrijvingDate,
+              date: date.datumDate,
+              time: date.tijdDate,
+              location: date.locatieDate
+            }
+          })
+      })
+
+      // Wait for all datePromises to resolve
+      return Promise.all(datePromises)
+    })
+    .catch((error) => {
+      console.error('Error fetching dates:', error)
+      throw error
+    })
+}
+
+export const postDate = (dateData) => {
+  const { userId, naamDate, beschrijvingDate, datumDate, tijdDate, locatieDate } = dateData
+
+  const data = {
+    naamDate: naamDate,
+    beschrijvingDate: beschrijvingDate,
+    datumDate: datumDate,
+    tijdDate: tijdDate,
+    locatieDate: locatieDate,
+    userId: userId // Use the user ID here
+  }
+
+  return fetch('http://localhost:3000/dates', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Error posting date')
+      }
+      return response.json()
+    })
+    .then((date) => {
+      return {
+        id: date.id,
+        user: {
+          id: userId, // Use the same user ID that was passed in
+          name: null, // Update this with the appropriate user name
+          age: null // Update this with the appropriate user age
+        },
+        name: date.naamDate,
+        description: date.beschrijvingDate,
+        date: date.datumDate,
+        time: date.tijdDate,
+        location: date.locatieDate
+      }
+    })
+    .catch((error) => {
+      console.error('Error posting date:', error)
+      throw error
+    })
+}
+
+export const getDateById = (dateId) => {
+  return fetch(`http://localhost:3000/dates/${dateId}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Error fetching date')
+      }
+      return response.json()
+    })
+    .then((date) => {
+      return fetch(`http://localhost:3000/users/${date.userId}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Error fetching user')
+          }
+          return response.json()
+        })
+        .then((userData) => {
+          return {
+            id: date.id,
+            user: {
+              id: date.userId,
+              name: userData.name,
+              age: userData.age
+            },
+            name: date.naamDate,
+            description: date.beschrijvingDate,
+            date: date.datumDate,
+            time: date.tijdDate,
+            location: date.locatieDate
+          }
+        })
+    })
+    .catch((error) => {
+      console.error('Error fetching date by ID:', error)
+      throw error
+    })
 }

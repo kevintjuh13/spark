@@ -11,17 +11,17 @@
           <v-avatar size="60" color="black">
             <img class="avatar-img" src="../assets/thijs.jpg" alt="" />
           </v-avatar>
-          <v-card-title>Thijs, 19</v-card-title>
+          <v-card-title>{{ user.name }}</v-card-title>
         </div>
         <div class="border-container">
           <div class="sub-div" style="border-right: 1px solid black">
-            <h3>Age</h3>
+            <h3>{{ user.age }}</h3>
           </div>
           <div class="sub-div">
-            <h3>Gender</h3>
+            <h3>{{ user.gender }}</h3>
           </div>
         </div>
-        <div class="title-container">
+        <div class="title-container" @click="goToProfile">
           <v-card-title>Profiel bekijken</v-card-title>
         </div>
       </v-card>
@@ -47,8 +47,24 @@
 export default {
   data() {
     return {
-      dialogVisible: false
+      dialogVisible: false,
+      user: {
+        name: '',
+        age: '',
+        gender: '',
+        show: '',
+        interests: '' // Remove the trailing comma
+      }
     }
+  },
+  mounted() {
+    const userData = this.$route.query
+    this.user.name = userData.name
+    this.user.age = userData.age
+    this.user.gender = userData.gender
+    this.user.show = userData.show
+    this.user.interest = userData.interest
+    // Assign other data properties as needed
   },
   methods: {
     openDialog() {
@@ -62,6 +78,14 @@ export default {
         // Logic for 'Intresses aanpassen'
       }
       this.dialogVisible = false
+    },
+    goToProfile() {
+      const { name, age, gender, interest, show } = this.user
+      console.log('Interests:', interest)
+      this.$router.push({
+        name: 'profile',
+        query: { name, age, gender, interest: interest, show }
+      })
     }
   }
 }
