@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="top-bar">
-      <v-icon class="mt-10 ml-10" size="30" icon="fas fa-arrow-left" />
+      <v-icon class="mt-10 ml-10" size="30" @click="goBack" icon="fas fa-arrow-left" />
       <h1 class="mt-8" style="font-size: 35px">Mijn Profiel</h1>
       <v-icon class="mt-10 mr-10" size="30" icon="fas fa-gear" @click="openDialog" />
     </div>
@@ -28,7 +28,7 @@
     </v-flex>
 
     <v-flex class="flex">
-      <v-card class="card mt-10" width="300" height="400"></v-card>
+      <v-card class="card mt-10" width="300" height="250"> </v-card>
     </v-flex>
 
     <v-dialog v-model="dialogVisible" max-width="500">
@@ -53,7 +53,7 @@ export default {
         age: '',
         gender: '',
         show: '',
-        interests: '' // Remove the trailing comma
+        interest: '' // Remove the trailing comma
       }
     }
   },
@@ -78,6 +78,13 @@ export default {
         // Logic for 'Intresses aanpassen'
       }
       this.dialogVisible = false
+    },
+    goBack() {
+      const { name, age, gender, interest, show } = this.user
+      this.$router.push({
+        name: 'homePage', // Replace 'home' with the actual name of your homepage route
+        query: { name, age, gender, interest, show }
+      })
     },
     goToProfile() {
       const { name, age, gender, interest, show } = this.user

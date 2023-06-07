@@ -80,8 +80,11 @@ export const getDates = () => {
               id: date.id,
               user: {
                 id: date.userId,
-                name: userData.name, // Update this with the appropriate user name property
-                age: userData.age // Update this with the appropriate user age property
+                name: userData.name,
+                age: userData.age,
+                show: userData.show,
+                gender: userData.gender,
+                interest: userData.interest
               },
               name: date.naamDate,
               description: date.beschrijvingDate,

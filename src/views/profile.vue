@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="top-bar">
-      <v-icon class="mt-10 ml-10" size="30" icon="fas fa-arrow-left" />
+      <v-icon class="mt-10 ml-10" size="30" icon="fas fa-arrow-left" @click="goBack" />
       <h1 class="title mt-8" style="font-size: 35px">Profile</h1>
     </div>
     <v-flex class="flex mt-10">
@@ -21,18 +21,12 @@
       <v-card-title class="mt-10">Interesses :</v-card-title>
       <template v-if="user.interest.length > 0">
         <template v-for="interest in user.interest" :key="interest">
-          <v-chip class="ml-5" variant="outlined">{{ interest }}</v-chip>
+          <v-chip class="ml-5 mt-5" variant="outlined">{{ interest }}</v-chip>
         </template>
       </template>
       <template v-else>
         <p>No interests available.</p>
       </template>
-    </v-flex>
-    <v-flex class="flex mt-10">
-      <div class="card-container">
-        <v-card class="card" width="300" height="350"></v-card>
-        <v-card class="card mt-14" width="300" height="350"></v-card>
-      </div>
     </v-flex>
   </div>
 </template>
@@ -44,7 +38,7 @@ export default {
         name: '',
         age: '',
         gender: '',
-        interest: '',
+        interest: [],
         show: ''
       }
     }
@@ -58,6 +52,16 @@ export default {
     this.user.gender = gender || ''
     this.user.show = show || ''
     this.user.interest = interest ? interest.split(',') : []
+  },
+  methods: {
+    goBack() {
+      const { name, age, gender, interest, show } = this.user
+      console.log('Interests:', interest)
+      this.$router.push({
+        name: 'myProfile',
+        query: { name, age, gender, interest: interest.join(','), show }
+      })
+    }
   }
 }
 </script>

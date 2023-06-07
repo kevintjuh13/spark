@@ -2,51 +2,178 @@
   <div class="container">
     <div class="top-bar">
       <v-icon class="mt-10 ml-10" size="30" icon="fas fa-search" @click="toggleSearch" />
-      <h1 class="title mt-8" style="font-size: 35px">Awaiting</h1>
+      <h1 class="title mt-6" style="font-size: 35px">Awaiting</h1>
     </div>
     <div class="searchBar" :class="{ active: showSearchBar }">
       <input type="text" placeholder="Search" />
     </div>
-    <v-row class="content">
-      <v-col class="sub-content" cols="12" sm="6" md="6" lg="4" v-for="index in 1" :key="index">
+    <v-row class="mt-10 content">
+      <v-col
+        class="sub-content"
+        cols="12"
+        sm="6"
+        md="6"
+        lg="4"
+        v-for="date in filteredDates"
+        :key="date.id"
+      >
         <v-card width="350" height="250" class="card">
+          <!-- Update the content of the card with the corresponding properties from the 'date' object -->
           <div class="avatar-container">
-            <v-avatar class="mt-5" color="surface-variant" size="75">
-              <img class="avatar-img" src="../../assets/thijs.jpg" alt="" />
-            </v-avatar>
-            <v-card-title>Thijs, 19</v-card-title>
-            <v-card-text style="font-size: 20px">Netflix & Chill</v-card-text>
+            <router-link :to="{ name: 'profile', query: date.user }">
+              <v-avatar class="mt-5" color="surface-variant" size="75">
+                <img class="avatar-img" src="../../assets/thijs.jpg" alt="" />
+              </v-avatar>
+            </router-link>
+            <v-card-title>{{ date.user.name }}, {{ date.user.age }}</v-card-title>
+            <v-card-text style="font-size: 20px">{{ date.name }}</v-card-text>
           </div>
           <div class="card-footer">
-            <v-card-subtitle class="mt-6">Ma 17 apr.</v-card-subtitle>
-            <v-btn class="button mr-4 mt-5" rounded>Details</v-btn>
+            <v-card-subtitle class="mt-6">{{ date.date }}</v-card-subtitle>
+
+            <v-btn class="button mr-4 mt-5" rounded @click="openDialog(date)">Details</v-btn>
           </div>
-          <v-card-subtitle>17:00 - 20:00</v-card-subtitle>
+
+          <!-- Add the v-dialog component here -->
+          <v-dialog v-model="date.dialogVisible" max-width="400">
+            <v-flex class="d-flex justify-center align-center mt-10">
+              <v-card width="350" height="550" class="dialog-card">
+                <div class="icon-xmark">
+                  <v-icon color="#f9cd52" class="mt-4" size="30" icon="fas fa-xmark"></v-icon>
+                </div>
+                <v-card-text class="text-center">
+                  <router-link :to="{ name: 'profile', query: date.user }">
+                    <v-avatar color="black" size="80"></v-avatar>
+                  </router-link>
+                </v-card-text>
+                <v-card-title class="text-center">{{ date.user.name }}</v-card-title>
+                <v-card-title class="text-center">{{ date.user.age }}</v-card-title>
+                <v-card-title class="text-center">{{ date.name }}</v-card-title>
+                <v-flex class="sub-container">
+                  <v-row class="mx-2 my-1">
+                    <v-icon class="ml-10 mt-8" color="#f9cd52" icon="fas fa-calendar"></v-icon>
+                    <v-card-title class="mt-5">{{ date.date }}</v-card-title>
+                  </v-row>
+                  <v-row class="mx-2 my-1">
+                    <v-icon class="ml-10 mt-8" color="#f9cd52" icon="fas fa-clock"></v-icon>
+                    <v-card-title class="mt-5">{{ date.time }}</v-card-title>
+                  </v-row>
+                  <v-row class="mx-2 my-1">
+                    <v-icon class="ml-10 mt-8" color="#f9cd52" icon="fas fa-location-dot"></v-icon>
+                    <v-card-title class="mt-5">{{ date.location }}</v-card-title>
+                  </v-row>
+                  <v-card-title class="text-center">
+                    <v-btn
+                      style="border: 1px solid black"
+                      width="175"
+                      height="40"
+                      color="#f9cd52"
+                      rounded
+                      >Aanmelden</v-btn
+                    >
+                  </v-card-title>
+                </v-flex>
+              </v-card>
+            </v-flex>
+          </v-dialog>
+          <v-row>
+            <v-card-subtitle class="ml-5 mt-2">{{ date.time }}</v-card-subtitle>
+            <v-card-subtitle class="ml-5">{{ date.location }}</v-card-subtitle>
+          </v-row>
         </v-card>
       </v-col>
     </v-row>
 
     <div class="navbar-container">
-      <navbar class="navbar"></navbar>
+      <div class="flex">
+        <v-card class="mb-10 border" width="300" height="40">
+          <router-link class="link" to="/chosen">
+            <v-icon class="ml-7" size="25" icon="fas fa-check"></v-icon>
+          </router-link>
+          <router-link class="link" to="/awaiting">
+            <v-icon class="ml-6" size="25" icon="fas fa-clock"></v-icon>
+          </router-link>
+          <router-link :to="{ name: 'postDate', query: { userId: userData.id } }">
+            <v-icon class="icon" size="25" icon="fas fa-circle-plus"></v-icon>
+          </router-link>
+
+          <v-icon class="ml-7" size="25" icon="fas fa-right-from-bracket"></v-icon>
+        </v-card>
+        <v-avatar size="65" color="white" class="avatar"></v-avatar>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import navbar from '../../components/navbar.vue'
+import { getDates } from '../../data.js'
 
 export default {
-  components: {
-    navbar
-  },
   data() {
     return {
-      showSearchBar: false
+      showSearchBar: false,
+      dialogVisible: false,
+      selectedOption: null,
+      options: ['Naam', 'Leeftijd', 'Geen'],
+      userData: {},
+      dates: [],
+      searchText: ''
+    }
+  },
+
+  mounted() {
+    this.userData = this.$route.query
+    console.log('User Data:', this.userData)
+    this.fetchDates()
+
+    this.adjustContainerHeight()
+  },
+
+  computed: {
+    filteredDates() {
+      return this.dates.filter((date) =>
+        date.user.name.toLowerCase().includes(this.searchText.toLowerCase())
+      )
     }
   },
   methods: {
+    adjustContainerHeight() {
+      const container = document.querySelector('.container')
+      if (container.scrollHeight > container.clientHeight) {
+        // Content is overflowing, switch to fit-content
+        container.style.height = 'fit-content'
+      } else {
+        // Content does not overflow, revert to 100vh
+        container.style.height = '100vh'
+      }
+    },
+    navigateToDateInfo(dateId) {
+      this.$router.push({ name: 'dateInfo', params: { dateId: dateId } })
+    },
+    openDialog(date) {
+      date.dialogVisible = true
+    },
+    closeDialog(date) {
+      date.dialogVisible = false
+    },
+    fetchDates() {
+      // You need to implement the logic to fetch the dates data
+      // You can use the getDates function from '../data.js' or any other method to fetch the data
+      // Example:
+      getDates()
+        .then((dates) => {
+          this.dates = dates
+        })
+        .catch((error) => {
+          console.error('Error fetching dates:', error)
+        })
+    },
     toggleSearch() {
       this.showSearchBar = !this.showSearchBar
+    },
+
+    navigateToPostDate(userId) {
+      this.$router.push({ name: 'postDate', query: { userId } })
     }
   }
 }
@@ -56,15 +183,18 @@ export default {
 .container {
   position: relative;
   font-family: Quicksand-Bold;
-  height: 100vh;
+  min-height: 100vh; /* Set a minimum height of 100vh */
   background-color: #f9f6f6;
   max-width: 100vw;
   overflow-x: hidden;
+  overflow-y: auto; /* Add vertical scrolling */
 }
 
-.title {
-  margin-left: 80px;
+.icon-xmark {
+  position: absolute;
+  margin-left: 300px;
 }
+
 .searchBar {
   display: flex;
   align-items: center;
@@ -97,17 +227,20 @@ export default {
 
 .top-bar {
   display: flex;
-
+  justify-content: space-between;
   height: 10%;
 }
 
 .content {
   display: flex;
   justify-content: center;
-
+  align-items: center;
   height: 80%;
 }
 
+.dialog-card {
+  border-radius: 20px;
+}
 .card {
   border-radius: 20px;
   box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
@@ -145,5 +278,35 @@ export default {
   left: 42%;
   transform: translateX(-50%);
   z-index: 999; /* Adjust as needed */
+}
+.border {
+  display: flex;
+  align-items: center;
+
+  border-radius: 20px;
+  background-color: #f9cd52;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-left: 70px;
+}
+.avatar {
+  position: absolute;
+  border: 1px solid black;
+  margin-bottom: 28px;
+}
+.icon {
+  margin-left: 90px;
+}
+
+.title {
+  margin-right: 130px;
 }
 </style>
