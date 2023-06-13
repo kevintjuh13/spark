@@ -6,7 +6,15 @@
       <h1>PERFECT DATE</h1>
     </div>
     <div class="buttons">
-      <myButton class="mb-5" width="200" height="40" rounded="xl" buttonText="Inloggen"></myButton>
+      <myButton
+        class="mb-5"
+        disabled="true"
+        width="200"
+        height="40"
+        rounded="xl"
+        buttonText="Inloggen"
+      ></myButton>
+
       <router-link to="/register">
         <myButton width="200" height="40" rounded="xl" buttonText="Registreren"></myButton>
       </router-link>

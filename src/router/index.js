@@ -52,6 +52,7 @@ const router = createRouter({
       name: 'profile',
       component: profile
     },
+
     {
       path: '/postDate',
       name: 'postDate',

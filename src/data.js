@@ -10,6 +10,20 @@ export const fetchOpties = () => {
 
 // bekijkt of the email die ingevoerd is al bestaat
 
+export const getUserData = (userId) => {
+  return fetch(`http://localhost:3000/users/${userId}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Error fetching user')
+      }
+      return response.json()
+    })
+    .catch((error) => {
+      console.error('Error fetching user data:', error)
+      throw error
+    })
+}
+
 export const addUser = (user) => {
   console.log('Adding user:', user)
   return fetch(`http://localhost:3000/users`, {

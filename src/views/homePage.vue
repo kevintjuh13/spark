@@ -47,7 +47,13 @@
             <v-flex class="d-flex justify-center align-center mt-10">
               <v-card width="350" height="550" class="dialog-card">
                 <div class="icon-xmark">
-                  <v-icon color="#f9cd52" class="mt-4" size="30" icon="fas fa-xmark"></v-icon>
+                  <v-icon
+                    color="#f9cd52"
+                    class="mt-4"
+                    size="30"
+                    icon="fas fa-xmark"
+                    @click="closeDialog(date)"
+                  ></v-icon>
                 </div>
                 <v-card-text class="text-center">
                   <router-link :to="{ name: 'profile', query: date.user }">
@@ -77,6 +83,7 @@
                       height="40"
                       color="#f9cd52"
                       rounded
+                      disabled="true"
                       @click="navigateToAwaitingPage(date)"
                       >Aanmelden</v-btn
                     >
@@ -316,5 +323,6 @@ export default {
 }
 .icon {
   margin-left: 90px;
+  color: black;
 }
 </style>

@@ -6,11 +6,14 @@
       <v-icon class="mt-10 mr-10" size="30" icon="fas fa-gear" @click="openDialog" />
     </div>
     <v-flex class="flex mt-10">
-      <v-card class="card" width="300" height="220">
+      <v-card class="card mt-10" width="250" height="300">
+        <img class="img" src="../assets/thijs.jpg" alt="" />
+      </v-card>
+    </v-flex>
+
+    <v-flex class="flex mt-10">
+      <v-card class="card" width="300" height="170">
         <div class="avatar-container">
-          <v-avatar size="60" color="black">
-            <img class="avatar-img" src="../assets/thijs.jpg" alt="" />
-          </v-avatar>
           <v-card-title>{{ user.name }}</v-card-title>
         </div>
         <div class="border-container">
@@ -25,10 +28,6 @@
           <v-card-title>Profiel bekijken</v-card-title>
         </div>
       </v-card>
-    </v-flex>
-
-    <v-flex class="flex">
-      <v-card class="card mt-10" width="300" height="250"> </v-card>
     </v-flex>
 
     <v-dialog v-model="dialogVisible" max-width="500">
@@ -116,6 +115,11 @@ export default {
   height: 10%;
 }
 
+.img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
 .card {
   border-radius: 20px;
 }
