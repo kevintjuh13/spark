@@ -26,7 +26,7 @@
       </div>
       <div class="registratie-knop">
         <myButton
-          class="mr-2"
+          class="mr-2 mt-16"
           style="background-color: black; color: white; font-size: 30px"
           type="submit"
           icon

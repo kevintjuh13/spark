@@ -3,8 +3,8 @@
     <v-progress-linear model-value="100"></v-progress-linear>
     <div class="mt-16 sub-container">
       <h1 class="mb-2 title">FOTO'S</h1>
-      <h5 class="mb-5 sub-title">Voeg 2 fotos toe</h5>
-      <v-file-input class="test" label="File input"></v-file-input>
+      <h5 class="mb-5 sub-title">Voeg 2 foto's toe</h5>
+      <input class="test" type="file" name="picture" ref="fileInput" @change="handleFileChange" />
     </div>
     <div class="registratie-knop">
       <myButton
@@ -21,43 +21,143 @@
 
 <script>
 import myButton from '../../components/button.vue'
+import { updateUserData, getImageURL } from '../../data.js'
 
 export default {
   components: { myButton },
+  data() {
+    return {
+      selectedPicture: null // Variabele om de geselecteerde foto op te slaan
+    }
+  },
   methods: {
-    submit() {
-      // Handle any necessary logic before redirecting to the home page
-      this.$router.push('/homePage')
+    handleFileChange(event) {
+      console.log('File selected:', event.target.files[0])
+      this.selectedPicture = event.target.files[0]
+    },
+    mounted() {
+      // Retrieve the query parameters from the $route object
+      const id = this.$route.query.id
+      const name = this.$route.query.name
+      const age = this.$route.query.age
+      const gender = this.$route.query.gender
+      const show = this.$route.query.show
+      const interest = this.$route.query.interest
+
+      // Use the retrieved data as needed
+      console.log('ID:', id)
+      console.log('Name:', name)
+      console.log('Age:', age)
+      console.log('Gender:', gender)
+      console.log('Show:', show)
+      console.log('Interest:', interest)
+    },
+
+    async submit() {
+      console.log('Picture before update:', this.selectedPicture) // Aangepaste regel
+
+      const id = this.$route.query.id
+      const formData = new FormData()
+      formData.append('picture', this.selectedPicture, this.selectedPicture.name)
+      const picture = formData.get('picture') // Haal de foto op uit het FormData-object
+
+      // Voeg de andere gebruikersgegevens toe aan een object
+      const user = {
+        id: id,
+        name: this.$route.query.name,
+        age: this.$route.query.age,
+        gender: this.$route.query.gender,
+        show: this.$route.query.show,
+        interest: this.$route.query.interest,
+        picture: picture // Voeg de foto toe aan het user-object
+      }
+
+      try {
+        // Update de gebruikersgegevens inclusief de foto
+        const updatedUser = await updateUserData(user)
+        console.log('User updated:', updatedUser)
+        const pictureURL = getImageURL(updatedUser.picture)
+        console.log('Picture URL:', pictureURL)
+
+        // Ga naar de interesse-pagina met de gebruikersgegevens
+        this.$router.push({
+          path: '/homePage',
+          query: {
+            name: user.name,
+            id: user.id,
+            age: user.age,
+            gender: user.gender,
+            show: user.show,
+            interest: user.interest,
+            picture: user.picture, // Add 'pictureURL' as a separate property
+            pictureURL: pictureURL
+          }
+        })
+      } catch (error) {
+        console.error('Error updating user:', error)
+      }
     }
   }
 }
 </script>
-<style scoped>
-.container {
-  font-family: Quicksand-Bold;
-  height: 100vh;
-  background-color: #f9cd52;
-}
-.registratie-knop {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  height: 60%;
-}
-.sub-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
 
-.title {
-  font-size: 30px;
+<style scoped>
+@media only screen and (min-width: 768px) {
+  .container {
+    font-family: Quicksand-Bold;
+    height: 100vh;
+    background-color: #f9cd52;
+  }
+  .registratie-knop {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 65%;
+  }
+  .sub-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: 50px;
+  }
+  .sub-title {
+    font-size: 20px;
+  }
+  .test {
+    width: 300px;
+  }
 }
-.sub-title {
-  font-size: 14px;
-}
-.test {
-  width: 300px;
+@media only screen and (max-width: 450px) {
+  .container {
+    font-family: Quicksand-Bold;
+    height: 100vh;
+    background-color: #f9cd52;
+  }
+  .registratie-knop {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 65%;
+  }
+  .sub-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+  .sub-title {
+    font-size: 14px;
+  }
+  .test {
+    width: 300px;
+  }
 }
 </style>

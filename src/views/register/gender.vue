@@ -8,11 +8,10 @@
         <v-col v-for="(gender, index) in genders" :key="index" cols="12" md="4">
           <v-item v-slot="{ isSelected, toggle }">
             <v-btn
+              class="buttons"
               :color="isSelected ? 'black' : ''"
               @click="toggle"
               dark
-              height="40"
-              width="200"
               rounded
               >{{ gender }}</v-btn
             >
@@ -63,7 +62,7 @@ export default {
         const updatedUser = await updateUserData(user)
         console.log('User updated:', updatedUser)
         this.$router.push({
-          path: '/datesTonen',
+          path: '/show',
           query: {
             name: name,
             id: id,
@@ -80,30 +79,66 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  font-family: Quicksand-Bold;
-  height: 100vh;
-  background-color: #f9cd52;
+@media only screen and (min-width: 768px) {
+  .container {
+    font-family: Quicksand-Bold;
+    height: 100vh;
+    background-color: #f9cd52;
+  }
+  .registratie-knop {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 55%;
+  }
+  .sub-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: 40px;
+  }
+  .sub-title {
+    font-size: 20px;
+  }
+  .buttons {
+    width: 250px;
+    height: 60px;
+  }
 }
-.registratie-knop {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  height: 52%;
-}
-.sub-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.textField {
-  width: 220px;
-}
-.title {
-  font-size: 30px;
-}
-.sub-title {
-  font-size: 14px;
+@media only screen and (max-width: 450px) {
+  .container {
+    font-family: Quicksand-Bold;
+    height: 100vh;
+    background-color: #f9cd52;
+  }
+  .registratie-knop {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 58%;
+  }
+  .sub-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .textField {
+    width: 220px;
+  }
+  .title {
+    font-size: 30px;
+  }
+  .sub-title {
+    font-size: 14px;
+  }
+  .buttons {
+    width: 200px;
+    height: 40px;
+  }
 }
 </style>

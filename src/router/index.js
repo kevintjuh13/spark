@@ -4,12 +4,11 @@ import register from '../views/register.vue'
 import firstname from '../views/register/firstname.vue'
 import age from '../views/register/age.vue'
 import intresses from '../views/register/intresses.vue'
-import geslacht from '../views/register/geslacht.vue'
-import datesTonen from '../views/register/datesTonen.vue'
+import gender from '../views/register/gender.vue'
+import show from '../views/register/show.vue'
 import foto from '../views/register/foto.vue'
 import homePage from '../views/homePage.vue'
 import dateInfo from '../views/dates/dateInfo.vue'
-import awaiting from '../views/dates/awaiting.vue'
 import myProfile from '../views/myProfile.vue'
 import postDate from '../views/dates/postDate.vue'
 import profile from '../views/profile.vue'
@@ -37,11 +36,7 @@ const router = createRouter({
       name: 'dateInfo',
       component: dateInfo
     },
-    {
-      path: '/awaiting',
-      name: 'awaiting',
-      component: awaiting
-    },
+
     {
       path: '/myProfile',
       name: 'myProfile',
@@ -74,14 +69,14 @@ const router = createRouter({
       component: intresses
     },
     {
-      path: '/geslacht',
-      name: 'geslacht',
-      component: geslacht
+      path: '/gender',
+      name: 'gender',
+      component: gender
     },
     {
-      path: '/datesTonen',
-      name: 'datesTonen',
-      component: datesTonen
+      path: '/show',
+      name: 'show',
+      component: show
     },
     {
       path: '/foto',

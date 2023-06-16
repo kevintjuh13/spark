@@ -6,13 +6,13 @@
       <v-icon class="mt-10 mr-10" size="30" icon="fas fa-gear" @click="openDialog" />
     </div>
     <v-flex class="flex mt-10">
-      <v-card class="card mt-10" width="250" height="300">
-        <img class="img" src="../assets/thijs.jpg" alt="" />
+      <v-card class="card-img mt-10">
+        <img class="img" :src="user.pictureURL" alt="" />
       </v-card>
     </v-flex>
 
     <v-flex class="flex mt-10">
-      <v-card class="card" width="300" height="170">
+      <v-card class="card-user">
         <div class="avatar-container">
           <v-card-title>{{ user.name }}</v-card-title>
         </div>
@@ -35,7 +35,9 @@
         <v-card-title class="aanpassen text-center">Aanpassen</v-card-title>
         <v-card-text>
           <div class="dialog-div" @click="handleDialogButton('gegevens')">Gegevens aanpassen</div>
-          <div class="dialog-div" @click="handleDialogButton('uitloggen')">Uitloggen</div>
+          <router-link to="/login" class="uitloggen">
+            <div class="dialog-div" @click="handleDialogButton('uitloggen')">Uitloggen</div>
+          </router-link>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -52,7 +54,8 @@ export default {
         age: '',
         gender: '',
         show: '',
-        interest: '' // Remove the trailing comma
+        interest: '',
+        pictureURL: ''
       }
     }
   },
@@ -63,6 +66,7 @@ export default {
     this.user.gender = userData.gender
     this.user.show = userData.show
     this.user.interest = userData.interest
+    this.user.pictureURL = userData.pictureURL
     // Assign other data properties as needed
   },
   methods: {
@@ -79,92 +83,193 @@ export default {
       this.dialogVisible = false
     },
     goBack() {
-      const { name, age, gender, interest, show } = this.user
+      const { name, age, gender, interest, show, pictureURL } = this.user
       this.$router.push({
         name: 'homePage', // Replace 'home' with the actual name of your homepage route
-        query: { name, age, gender, interest, show }
+        query: { name, age, gender, interest, show, pictureURL }
       })
     },
     goToProfile() {
-      const { name, age, gender, interest, show } = this.user
+      const { name, age, gender, interest, show, pictureURL } = this.user
       console.log('Interests:', interest)
       this.$router.push({
         name: 'profile',
-        query: { name, age, gender, interest: interest, show }
+        query: { name, age, gender, interest: interest, show, pictureURL }
       })
     }
   }
 }
 </script>
 <style scoped>
-.container {
-  position: relative;
-  font-family: Quicksand-Bold;
-  height: 100vh;
-  background-color: #f9f6f6;
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+@media only screen and (min-width: 768px) {
+  .container {
+    position: relative;
+    font-family: Quicksand-Bold;
+    height: 100vh;
+    background-color: #f9f6f6;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
 
-.aanpassen {
-  font-family: Quicksand-Bold;
-}
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  height: 10%;
-}
+  .aanpassen {
+    font-family: Quicksand-Bold;
+  }
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    height: 10%;
+  }
 
-.img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-}
-.card {
-  border-radius: 20px;
-}
+  .img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  .card-img {
+    width: 300px;
+    height: 350px;
+    border-radius: 20px;
+  }
 
-.flex {
-  display: flex;
-  justify-content: center;
-}
+  .card-user {
+    width: 350px;
+    height: 170px;
+    border-radius: 20px;
+  }
 
-.avatar-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  border-bottom: 1px solid black;
-}
+  .flex {
+    display: flex;
+    justify-content: center;
+  }
 
-.border-container {
-  display: flex;
-  flex-direction: row;
-  border-bottom: 1px solid black;
-}
-.sub-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  width: 50%;
-}
+  .avatar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-bottom: 1px solid black;
+  }
 
-.title-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 60px;
+  .border-container {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid black;
+  }
+  .sub-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 50%;
+  }
+  .uitloggen {
+    text-decoration: none;
+    color: black;
+  }
+
+  .title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+  }
+  .avatar-img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  .dialog-div {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+  }
 }
-.avatar-img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-}
-.dialog-div {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 50px;
+@media only screen and (max-width: 450px) {
+  .container {
+    position: relative;
+    font-family: Quicksand-Bold;
+    height: 100vh;
+    background-color: #f9f6f6;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  .uitloggen {
+    text-decoration: none;
+    color: black;
+  }
+  .card-img {
+    width: 250px;
+    height: 300px;
+    border-radius: 20px;
+  }
+
+  .uitloggen {
+    text-decoration: none;
+  }
+  .card-user {
+    width: 300px;
+    height: 170px;
+    border-radius: 20px;
+  }
+
+  .aanpassen {
+    font-family: Quicksand-Bold;
+  }
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    height: 10%;
+  }
+
+  .img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .flex {
+    display: flex;
+    justify-content: center;
+  }
+
+  .avatar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-bottom: 1px solid black;
+  }
+
+  .border-container {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid black;
+  }
+  .sub-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 50%;
+  }
+
+  .title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+  }
+  .avatar-img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  .dialog-div {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+  }
 }
 </style>

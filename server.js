@@ -2,8 +2,11 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mysql = require('mysql')
 const cors = require('cors')
+const multer = require('multer')
+const path = require('path')
 
 const app = express()
+const upload = multer({ dest: 'uploads/' }) // Map waar geüploade foto's worden opgeslagen
 
 // Middleware om JSON request bodies te parsen
 app.use(bodyParser.json())
@@ -12,6 +15,10 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
   next()
 })
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+
+const uploadPath = path.join(__dirname, 'uploads')
+console.log('Upload path:', uploadPath)
 
 // Maak een nieuwe database verbinding aan
 const connection = mysql.createConnection({
@@ -76,17 +83,28 @@ app.post('/users', (req, res) => {
   })
 })
 
-app.put('/users/:id', (req, res) => {
+app.put('/users/:id', upload.single('picture'), (req, res) => {
   const id = req.params.id
-  const { name, age, gender, show, interest } = req.body // Use object destructuring to extract the values
+  const { name, age, gender, show, interest } = req.body
+
+  let picture = ''
+  if (req.file) {
+    // If an image was uploaded, save the filename
+    picture = req.file.filename // Save the filename instead of the file path
+    console.log('Received picture:', req.file)
+  }
+
+  console.log('Request body:', req.body)
+
   const query =
-    'UPDATE users SET name = ?, age = ?, gender = ?, `show` = ?, interest = ? WHERE id = ?' // Wrap `show` with backticks
-  connection.query(query, [name, age, gender, show, interest, id], (error, results) => {
+    'UPDATE users SET name = ?, age = ?, gender = ?, `show` = ?, interest = ?, picture = ? WHERE id = ?'
+  connection.query(query, [name, age, gender, show, interest, picture, id], (error, results) => {
     if (error) {
       console.error('Error updating user:', error)
-      res.status(500).json({ error: 'There was an error updating the user.' })
+      res.status(500).json({ error: 'Error updating user.' })
     } else {
-      res.json({ message: 'User updated.' })
+      console.log('Affected rows:', results.affectedRows)
+      res.json({ id: id, message: 'User updated.', picture: picture }) // Return the saved picture filename
     }
   })
 })

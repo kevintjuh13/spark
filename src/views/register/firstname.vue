@@ -8,7 +8,7 @@
     </div>
     <div class="registratie-knop">
       <myButton
-        class="mr-2"
+        class="mr-2 mt-16"
         style="background-color: black; color: white; font-size: 30px"
         type="submit"
         icon
@@ -53,30 +53,61 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  font-family: Quicksand-Bold;
-  height: 100vh;
-  background-color: #f9cd52;
+@media only screen and (min-width: 768px) {
+  /* CSS styles for tablet devices */
+  .container {
+    font-family: Quicksand-Bold;
+    height: 100vh;
+    background-color: #f9cd52;
+  }
+  .registratie-knop {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 60%;
+  }
+  .sub-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .textField {
+    width: 300px;
+  }
+  .title {
+    font-size: 40px;
+  }
+  .sub-title {
+    font-size: 20px;
+  }
 }
-.registratie-knop {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  height: 60%;
-}
-.sub-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.textField {
-  width: 220px;
-}
-.title {
-  font-size: 30px;
-}
-.sub-title {
-  font-size: 14px;
+@media only screen and (max-width: 450px) {
+  .container {
+    font-family: Quicksand-Bold;
+    height: 100vh;
+    background-color: #f9cd52;
+  }
+  .registratie-knop {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 65%;
+  }
+  .sub-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .textField {
+    width: 220px;
+  }
+  .title {
+    font-size: 30px;
+  }
+  .sub-title {
+    font-size: 14px;
+  }
 }
 </style>

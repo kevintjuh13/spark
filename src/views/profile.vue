@@ -6,7 +6,9 @@
     </div>
     <v-flex class="flex mt-10">
       <div class="card-container">
-        <v-card class="card" width="300" height="350"></v-card>
+        <v-card class="card" width="300" height="350">
+          <img class="avatar-img" :src="user.pictureURL" alt="" />
+        </v-card>
         <v-card-title class="mt-3" style="font-size: 30px"
           >{{ user.name }}, {{ user.age }}</v-card-title
         >
@@ -39,62 +41,109 @@ export default {
         age: '',
         gender: '',
         interest: [],
-        show: ''
+        show: '',
+        pictureURL: ''
       }
     }
   },
   mounted() {
-    const { name, age, gender, interest, show } = this.$route.query
+    const { name, age, gender, interest, show, pictureURL } = this.$route.query
     console.log('Interests:', interest)
 
     this.user.name = name || ''
     this.user.age = age || ''
     this.user.gender = gender || ''
     this.user.show = show || ''
+    this.user.pictureURL = pictureURL || ''
     this.user.interest = interest ? interest.split(',') : []
   },
   methods: {
     goBack() {
-      const { name, age, gender, interest, show } = this.user
+      const { name, age, gender, interest, show, pictureURL } = this.user
       console.log('Interests:', interest)
       this.$router.push({
         name: 'myProfile',
-        query: { name, age, gender, interest: interest.join(','), show }
+        query: { name, age, gender, interest: interest.join(','), show, pictureURL }
       })
     }
   }
 }
 </script>
 <style scoped>
-.container {
-  position: relative;
-  font-family: Quicksand-Bold;
-  height: 100vh;
-  background-color: #f9f6f6;
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+@media only screen and (min-width: 768px) {
+  .container {
+    position: relative;
+    font-family: Quicksand-Bold;
+    height: 100vh;
+    background-color: #f9f6f6;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
 
-.card {
-  border-radius: 20px;
-}
+  .card {
+    border-radius: 20px;
+  }
 
-.flex {
-  display: flex;
-  justify-content: center;
-}
-.top-bar {
-  display: flex;
+  .flex {
+    display: flex;
+    justify-content: center;
+  }
+  .top-bar {
+    display: flex;
 
-  height: 10%;
+    height: 10%;
+  }
+  .avatar-img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  .card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .title {
+    margin-left: 260px;
+  }
 }
-.card-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.title {
-  margin-left: 100px;
+@media only screen and (max-width: 450px) {
+  .container {
+    position: relative;
+    font-family: Quicksand-Bold;
+    height: 100vh;
+    background-color: #f9f6f6;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  .card {
+    border-radius: 20px;
+  }
+  .avatar-img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .flex {
+    display: flex;
+    justify-content: center;
+  }
+  .top-bar {
+    display: flex;
+
+    height: 10%;
+  }
+  .card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .title {
+    margin-left: 90px;
+  }
 }
 </style>

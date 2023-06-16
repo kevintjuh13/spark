@@ -39,13 +39,19 @@ export const addUser = (user) => {
     })
     .catch((error) => console.error('Error adding user:', error))
 }
+
 export const updateUserData = (user) => {
+  const formData = new FormData()
+  formData.append('name', user.name)
+  formData.append('age', user.age)
+  formData.append('gender', user.gender)
+  formData.append('show', user.show)
+  formData.append('interest', user.interest)
+  formData.append('picture', user.picture)
+
   return fetch(`http://localhost:3000/users/${user.id}`, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(user) // Pass the user object directly as the request body
+    body: formData
   })
     .then((response) => {
       console.log('Response from updating user data:', response)
@@ -68,6 +74,11 @@ export const addDate = (date) => {
       return response.json()
     })
     .catch((error) => console.error('Error adding date:', error))
+}
+
+export function getImageURL(picturePath) {
+  const serverURL = 'http://localhost:3000' // Update with your server URL
+  return `${serverURL}/uploads/${picturePath}`
 }
 
 export const getDates = () => {
@@ -98,7 +109,8 @@ export const getDates = () => {
                 age: userData.age,
                 show: userData.show,
                 gender: userData.gender,
-                interest: userData.interest
+                interest: userData.interest,
+                picture: userData.picture
               },
               name: date.naamDate,
               description: date.beschrijvingDate,
@@ -149,7 +161,8 @@ export const postDate = (dateData) => {
         user: {
           id: userId, // Use the same user ID that was passed in
           name: null, // Update this with the appropriate user name
-          age: null // Update this with the appropriate user age
+          age: null, // Update this with the appropriate user age
+          picture: null
         },
         name: date.naamDate,
         description: date.beschrijvingDate,
@@ -186,7 +199,8 @@ export const getDateById = (dateId) => {
             user: {
               id: date.userId,
               name: userData.name,
-              age: userData.age
+              age: userData.age,
+              picture: userData.picture
             },
             name: date.naamDate,
             description: date.beschrijvingDate,

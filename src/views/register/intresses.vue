@@ -98,14 +98,15 @@ export default {
         const name = this.$route.query.name
         const age = this.$route.query.age
         const gender = this.$route.query.gender
-        const show = this.$route.query.show // Fixed variable name
+        const show = this.$route.query.show
 
         const user = {
           id: id,
           name: name,
           age: age,
           gender: gender,
-          show: show, // Fixed variable name
+          show: show,
+
           interest: this.selectedOptions.join(', ')
         }
 
@@ -114,7 +115,7 @@ export default {
             console.log('User interests updated:', response)
             // Navigate to the home page and pass the user data as query parameters
             this.$router.push({
-              name: 'homePage',
+              name: 'foto',
               query: user
             })
           })
@@ -129,51 +130,97 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  font-family: Quicksand-Bold;
-  height: 100vh;
-  background-color: #f9cd52;
-}
-.registratie-knop {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  height: 22%;
-}
-.sub-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.textField {
-  width: 220px;
-}
-.title {
-  font-size: 30px;
-}
-.sub-title {
-  font-size: 14px;
-}
-.chips-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.chips-sub-container {
-  display: flex;
-  justify-content: center;
-}
+@media only screen and (min-width: 768px) {
+  .container {
+    font-family: Quicksand-Bold;
+    height: 100vh;
+    background-color: #f9cd52;
+  }
+  .registratie-knop {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 50%;
+  }
+  .sub-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 
-.chip {
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
+  .title {
+    font-size: 50px;
+  }
+  .sub-title {
+    font-size: 20px;
+  }
+  .chips-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .chips-sub-container {
+    display: flex;
+    justify-content: center;
+  }
 
-.error-message {
-  color: red;
-  margin-top: 10px;
-}
+  .chip {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
 
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .container {
+    font-family: Quicksand-Bold;
+    height: 100vh;
+    background-color: #f9cd52;
+  }
+  .registratie-knop {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 40%;
+  }
+  .sub-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .textField {
+    width: 220px;
+  }
+  .title {
+    font-size: 30px;
+  }
+  .sub-title {
+    font-size: 14px;
+  }
+  .chips-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .chips-sub-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .chip {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+}
 /* Add additional styles as needed */
 </style>
