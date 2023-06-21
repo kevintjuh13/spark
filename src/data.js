@@ -1,14 +1,10 @@
 // Hier export ik mijn databases, om te gebruiken in mijn components met gebruik van fetch()
 
-// Dit is een test table
-
 export const fetchOpties = () => {
   return fetch('http://localhost:3000/intresses')
     .then((response) => response.json())
     .catch((error) => console.error('Error fetching data: ', error))
 }
-
-// bekijkt of the email die ingevoerd is al bestaat
 
 export const getUserData = (userId) => {
   return fetch(`http://localhost:3000/users/${userId}`)
@@ -20,6 +16,21 @@ export const getUserData = (userId) => {
     })
     .catch((error) => {
       console.error('Error fetching user data:', error)
+      throw error
+    })
+}
+
+export const deleteUserData = (userId) => {
+  return fetch(`http://localhost:3000/users/${userId}`, {
+    method: 'DELETE'
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Fout bij het verwijderen van de gebruiker')
+      }
+    })
+    .catch((error) => {
+      console.error('Fout bij het verwijderen van de gebruiker:', error)
       throw error
     })
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="top-bar">
-      <v-icon class="mt-10 ml-10" size="30" icon="fas fa-arrow-left" />
+      <v-icon class="mt-10 ml-10" size="30" icon="fas fa-arrow-left" @click="goBack" />
       <h1 class="title mt-8" style="font-size: 35px">Post Date</h1>
     </div>
     <v-flex class="flex mt-10">
@@ -69,7 +69,15 @@ import { addDate } from '../../data.js'
 export default {
   data() {
     return {
-      userId: null, // Add userId to the component's data
+      user: {
+        id: null,
+        name: '',
+        age: '',
+        gender: '',
+        show: '',
+        interest: '',
+        pictureURL: ''
+      },
       naamDate: '',
       selectedDate: null,
       selectedTime: null,
@@ -110,15 +118,32 @@ export default {
     }
   },
   created() {
-    // Retrieve the user ID from the URL query parameters
     this.userId = this.$route.query.userId
-    // Use the user ID as needed
+  },
+  mounted() {
+    const userData = this.$route.query
+    this.user.id = userData.id
+    this.user.name = userData.name
+    this.user.age = userData.age
+    this.user.gender = userData.gender
+    this.user.show = userData.show
+    this.user.interest = userData.interest
+    this.user.pictureURL = userData.pictureURL
+    // Assign other data properties as needed
   },
 
   methods: {
+    goBack() {
+      const { id, name, age, gender, interest, show, pictureURL } = this.user
+
+      this.$router.push({
+        name: 'homePage',
+        query: { id, name, age, gender, interest: interest, show, pictureURL }
+      })
+    },
     async postDate() {
       const date = {
-        userId: this.userId, // Use the userId obtained from the URL query parameters
+        userId: this.user.id,
         naamDate: this.naamDate,
         datumDate: this.selectedDate,
         tijdDate: this.selectedTime,
@@ -128,6 +153,12 @@ export default {
       try {
         const savedDate = await addDate(date)
         console.log('Date saved: ', savedDate)
+
+        const { id, name, age, gender, interest, show, pictureURL } = this.user
+        this.$router.push({
+          name: 'homePage',
+          query: { id, name, age, gender, interest: interest, show, pictureURL }
+        })
       } catch (error) {
         console.error('Error posting date: ', error)
       }

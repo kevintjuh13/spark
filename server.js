@@ -49,6 +49,28 @@ app.get('/users', (req, res) => {
     }
   })
 })
+// DELETE-route voor gebruikers en gerelateerde data
+app.delete('/users/:userId', (req, res) => {
+  const userId = req.params.userId
+
+  connection.query('DELETE FROM dates WHERE userId = ?', [userId], (err, result) => {
+    if (err) {
+      console.error('Fout bij het verwijderen van de gerelateerde data: ', err)
+      res.status(500).json({ error: 'Fout bij het verwijderen van de gerelateerde data' })
+      return
+    }
+
+    connection.query('DELETE FROM users WHERE id = ?', [userId], (err, result) => {
+      if (err) {
+        console.error('Fout bij het verwijderen van de gebruiker: ', err)
+        res.status(500).json({ error: 'Fout bij het verwijderen van de gebruiker' })
+        return
+      }
+
+      res.sendStatus(200)
+    })
+  })
+})
 
 app.get('/users/:id', (req, res) => {
   const id = req.params.id

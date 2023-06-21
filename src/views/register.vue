@@ -116,7 +116,7 @@ export default {
     justify-content: flex-end;
     align-items: center;
     height: 10%;
-    margin-top: 100px !important;
+    margin-top: 30px !important;
   }
   .inputs {
     width: 100%;
@@ -153,7 +153,7 @@ export default {
     justify-content: flex-end;
     align-items: center;
     height: 10%;
-    margin-top: 100px !important;
+    margin-top: 30px !important;
   }
   .inputs {
     width: 100%;

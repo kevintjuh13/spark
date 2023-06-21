@@ -90,7 +90,7 @@ export default {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    height: 50%;
+    height: 38%;
   }
   .sub-container {
     display: flex;
@@ -119,7 +119,7 @@ export default {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    height: 50%;
+    height: 42%;
   }
   .sub-container {
     display: flex;

@@ -37,6 +37,7 @@ export default {
   data() {
     return {
       user: {
+        id: '',
         name: '',
         age: '',
         gender: '',
@@ -46,10 +47,11 @@ export default {
       }
     }
   },
-  mounted() {
-    const { name, age, gender, interest, show, pictureURL } = this.$route.query
-    console.log('Interests:', interest)
 
+  mounted() {
+    const { id, name, age, gender, interest, show, pictureURL } = this.$route.query
+    console.log('Interests:', interest)
+    this.user.id = id || ''
     this.user.name = name || ''
     this.user.age = age || ''
     this.user.gender = gender || ''
@@ -59,11 +61,11 @@ export default {
   },
   methods: {
     goBack() {
-      const { name, age, gender, interest, show, pictureURL } = this.user
+      const { id, name, age, gender, interest, show, pictureURL } = this.user
       console.log('Interests:', interest)
       this.$router.push({
         name: 'myProfile',
-        query: { name, age, gender, interest: interest.join(','), show, pictureURL }
+        query: { id, name, age, gender, interest: interest.join(','), show, pictureURL }
       })
     }
   }

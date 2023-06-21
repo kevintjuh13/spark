@@ -35,9 +35,13 @@
         <v-card-title class="aanpassen text-center">Aanpassen</v-card-title>
         <v-card-text>
           <div class="dialog-div" @click="handleDialogButton('gegevens')">Gegevens aanpassen</div>
+
           <router-link to="/login" class="uitloggen">
             <div class="dialog-div" @click="handleDialogButton('uitloggen')">Uitloggen</div>
           </router-link>
+          <div class="dialog-div" @click="handleDialogButton('verwijderen')">
+            Account verwijderen
+          </div>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -45,11 +49,13 @@
 </template>
 
 <script>
+import { deleteUserData } from '../data.js'
 export default {
   data() {
     return {
       dialogVisible: false,
       user: {
+        id: '',
         name: '',
         age: '',
         gender: '',
@@ -61,6 +67,7 @@ export default {
   },
   mounted() {
     const userData = this.$route.query
+    this.user.id = userData.id
     this.user.name = userData.name
     this.user.age = userData.age
     this.user.gender = userData.gender
@@ -75,26 +82,39 @@ export default {
     },
     handleDialogButton(option) {
       if (option === 'gegevens') {
-        // Logic for 'gegevens aanpassen'
-        console.log('het werkt')
+        const { id } = this.user
+        this.$router.push({
+          name: 'firstname',
+          query: { id }
+        })
       } else if (option === 'uitloggen') {
-        // Logic for 'Intresses aanpassen'
+      } else if (option === 'verwijderen') {
+        const { id } = this.user
+
+        deleteUserData(id)
+          .then(() => {
+            this.$router.push('/login')
+          })
+          .catch((error) => {
+            console.error('Error deleting user account:', error)
+          })
       }
+
       this.dialogVisible = false
     },
     goBack() {
-      const { name, age, gender, interest, show, pictureURL } = this.user
+      const { id, name, age, gender, interest, show, pictureURL } = this.user
       this.$router.push({
         name: 'homePage', // Replace 'home' with the actual name of your homepage route
-        query: { name, age, gender, interest, show, pictureURL }
+        query: { id, name, age, gender, interest, show, pictureURL }
       })
     },
     goToProfile() {
-      const { name, age, gender, interest, show, pictureURL } = this.user
+      const { id, name, age, gender, interest, show, pictureURL } = this.user
       console.log('Interests:', interest)
       this.$router.push({
         name: 'profile',
-        query: { name, age, gender, interest: interest, show, pictureURL }
+        query: { id, name, age, gender, interest: interest, show, pictureURL }
       })
     }
   }

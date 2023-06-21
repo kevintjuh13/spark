@@ -140,7 +140,7 @@ export default {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    height: 50%;
+    height: 38%;
   }
   .sub-container {
     display: flex;
@@ -185,7 +185,7 @@ export default {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    height: 40%;
+    height: 35%;
   }
   .sub-container {
     display: flex;

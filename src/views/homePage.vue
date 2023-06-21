@@ -30,11 +30,10 @@
         <v-card width="350" height="250" class="card">
           <!-- Update the content of the card with the corresponding properties from the 'date' object -->
           <div class="avatar-container">
-            <router-link :to="{ name: 'profile', query: date.user }">
-              <v-avatar class="mt-5" color="surface-variant" size="75">
-                <img class="avatar-img" :src="getImageURL(date.user.picture)" alt="" />
-              </v-avatar>
-            </router-link>
+            <v-avatar class="mt-5" color="surface-variant" size="75">
+              <img class="avatar-img" :src="getImageURL(date.user.picture)" alt="" />
+            </v-avatar>
+
             <v-card-title>{{ date.user.name }}, {{ date.user.age }}</v-card-title>
             <v-card-text style="font-size: 20px">{{ date.name }}</v-card-text>
           </div>
@@ -58,15 +57,13 @@
                   ></v-icon>
                 </div>
                 <v-card-text class="text-center">
-                  <router-link :to="{ name: 'profile', query: date.user }">
-                    <v-avatar color="black" size="80">
-                      <img
-                        class="avatar-img"
-                        :src="getImageURL(date.user.picture)"
-                        alt="Profile Picture"
-                      />
-                    </v-avatar>
-                  </router-link>
+                  <v-avatar color="black" size="80">
+                    <img
+                      class="avatar-img"
+                      :src="getImageURL(date.user.picture)"
+                      alt="Profile Picture"
+                    />
+                  </v-avatar>
                 </v-card-text>
                 <v-card-title class="text-center">{{ date.user.name }}</v-card-title>
                 <v-card-title class="text-center">{{ date.user.age }}</v-card-title>
@@ -117,7 +114,7 @@
           <router-link class="link" to="/awaiting">
             <v-icon class="ml-6" size="25" icon="fas fa-clock"></v-icon>
           </router-link>
-          <router-link :to="{ name: 'postDate', query: { userId: userData.id } }">
+          <router-link :to="{ name: 'postDate', query: userData }">
             <v-icon class="icon" size="25" icon="fas fa-circle-plus"></v-icon>
           </router-link>
 
@@ -169,18 +166,15 @@ export default {
           date.user.name.toLowerCase().includes(this.searchText.toLowerCase())
         )
       }
-    },
-
-    getImageURL() {
-      return (picture) => {
-        if (!picture) {
-          return '' // Return an empty string if the picture is not available
-        }
-        return getImageURL(picture) // Use the 'getImageURL' function from '../data.js' to get the complete URL
-      }
     }
   },
   methods: {
+    getImageURL(picture) {
+      if (!picture) {
+        return '' // Return an empty string if the picture is not available
+      }
+      return getImageURL(picture) // Use the 'getImageURL' function from '../data.js' to get the complete URL
+    },
     adjustContainerHeight() {
       const container = document.querySelector('.container')
       if (container.scrollHeight > container.clientHeight) {
