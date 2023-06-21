@@ -38,6 +38,7 @@ connection.connect((err) => {
 })
 
 // USERS table
+// Route om gebruikersgegevens op te halen
 app.get('/users', (req, res) => {
   const query = 'SELECT * FROM users'
   connection.query(query, (error, results) => {
@@ -49,7 +50,8 @@ app.get('/users', (req, res) => {
     }
   })
 })
-// DELETE-route voor gebruikers en gerelateerde data
+
+// Route om gebruiker te verwijderen inclusief gerelateerde data
 app.delete('/users/:userId', (req, res) => {
   const userId = req.params.userId
 
@@ -72,6 +74,7 @@ app.delete('/users/:userId', (req, res) => {
   })
 })
 
+// Route om specifieke gebruiker op te halen
 app.get('/users/:id', (req, res) => {
   const id = req.params.id
   const query = 'SELECT * FROM users WHERE id = ?'
@@ -89,6 +92,7 @@ app.get('/users/:id', (req, res) => {
   })
 })
 
+// Route om nieuwe gebruiker toe te voegen
 app.post('/users', (req, res) => {
   const email = req.body.email
   const password = req.body.password
@@ -105,14 +109,15 @@ app.post('/users', (req, res) => {
   })
 })
 
+// Route om gebruikersgegevens bij te werken
 app.put('/users/:id', upload.single('picture'), (req, res) => {
   const id = req.params.id
   const { name, age, gender, show, interest } = req.body
 
   let picture = ''
   if (req.file) {
-    // If an image was uploaded, save the filename
-    picture = req.file.filename // Save the filename instead of the file path
+    // Als er een afbeelding is geüpload, sla dan de bestandsnaam op
+    picture = req.file.filename // Sla de bestandsnaam op in plaats van het bestandspad
     console.log('Received picture:', req.file)
   }
 
@@ -132,6 +137,7 @@ app.put('/users/:id', upload.single('picture'), (req, res) => {
 })
 
 // INTRESSE TABLE
+// Route om intresses op te halen
 app.get('/intresses', (req, res) => {
   const query = 'SELECT * FROM intresses'
   connection.query(query, (error, results) => {
@@ -144,6 +150,7 @@ app.get('/intresses', (req, res) => {
   })
 })
 
+// Route om nieuwe date toe te voegen
 app.post('/dates', (req, res) => {
   const { userId, naamDate, datumDate, tijdDate, locatieDate, beschrijvingDate } = req.body
   const query =
@@ -163,6 +170,7 @@ app.post('/dates', (req, res) => {
   )
 })
 
+// Route om dates op te halen
 app.get('/dates', (req, res) => {
   const query = 'SELECT * FROM dates'
   connection.query(query, (error, results) => {
@@ -175,6 +183,7 @@ app.get('/dates', (req, res) => {
   })
 })
 
+// Route om specifieke date op te halen
 app.get('/dates/:id', (req, res) => {
   const id = req.params.id
   const query = 'SELECT * FROM dates WHERE id = ?'
@@ -191,7 +200,8 @@ app.get('/dates/:id', (req, res) => {
     }
   })
 })
-// Start de server
+
+// Start de server op poort 3000
 app.listen(3000, () => {
   console.log('De server is gestart op poort 3000.')
 })

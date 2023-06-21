@@ -74,12 +74,13 @@ export default {
     this.user.show = userData.show
     this.user.interest = userData.interest
     this.user.pictureURL = userData.pictureURL
-    // Assign other data properties as needed
   },
   methods: {
+    // opent de pop-up
     openDialog() {
       this.dialogVisible = true
     },
+    // als je op een knop in de pop-up klikt gebeurd er het volgende :
     handleDialogButton(option) {
       if (option === 'gegevens') {
         const { id } = this.user
@@ -102,13 +103,16 @@ export default {
 
       this.dialogVisible = false
     },
+    // gaat terug naar de homepagina met deze data
     goBack() {
       const { id, name, age, gender, interest, show, pictureURL } = this.user
       this.$router.push({
-        name: 'homePage', // Replace 'home' with the actual name of your homepage route
+        name: 'homePage',
         query: { id, name, age, gender, interest, show, pictureURL }
       })
     },
+
+    // gaat naar de profile pagina met deze data
     goToProfile() {
       const { id, name, age, gender, interest, show, pictureURL } = this.user
       console.log('Interests:', interest)

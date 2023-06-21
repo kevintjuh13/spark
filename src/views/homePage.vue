@@ -89,7 +89,6 @@
                       color="#f9cd52"
                       rounded
                       disabled="true"
-                      @click="navigateToAwaitingPage(date)"
                       >Aanmelden</v-btn
                     >
                   </v-card-title>
@@ -118,7 +117,7 @@
             <v-icon class="icon" size="25" icon="fas fa-circle-plus"></v-icon>
           </router-link>
 
-          <v-icon class="ml-7" size="25" icon="fas fa-right-from-bracket"></v-icon>
+          <v-icon class="ml-7" size="25" icon="fas fa-gear"></v-icon>
         </v-card>
         <v-avatar size="65" color="white" class="avatar">
           <v-icon icon="fas fa-home"></v-icon>
@@ -154,6 +153,7 @@ export default {
   },
 
   computed: {
+    // filterd de dates op naam. wanneer je op het zoekbalk icoontje klikt
     filteredDates() {
       if (this.userData.show === 'vrouw') {
         return this.dates.filter(
@@ -171,36 +171,34 @@ export default {
   methods: {
     getImageURL(picture) {
       if (!picture) {
-        return '' // Return an empty string if the picture is not available
+        return ''
       }
-      return getImageURL(picture) // Use the 'getImageURL' function from '../data.js' to get the complete URL
+      return getImageURL(picture)
     },
     adjustContainerHeight() {
       const container = document.querySelector('.container')
       if (container.scrollHeight > container.clientHeight) {
-        // Content is overflowing, switch to fit-content
         container.style.height = 'fit-content'
       } else {
-        // Content does not overflow, revert to 100vh
         container.style.height = '100vh'
       }
     },
+    // navigeert naar de dateInfo pagina
     navigateToDateInfo(dateId) {
       this.$router.push({ name: 'dateInfo', params: { dateId: dateId } })
     },
+
+    // opent de pop-up
     openDialog(date) {
       date.dialogVisible = true
     },
+
+    // sluit de pop-up
     closeDialog(date) {
       date.dialogVisible = false
     },
-    navigateToAwaitingPage(date) {
-      this.$router.push({ name: 'awaiting', query: { dateId: date.id } })
-    },
+    // dit haalt de data uit de dates table zodat je het hier kan gebruiken
     fetchDates() {
-      // You need to implement the logic to fetch the dates data
-      // You can use the getDates function from '../data.js' or any other method to fetch the data
-      // Example:
       getDates()
         .then((dates) => {
           console.log(dates)
@@ -210,10 +208,12 @@ export default {
           console.error('Error fetching dates:', error)
         })
     },
+
+    // zoekbalk openen en sluiten
     toggleSearch() {
       this.showSearchBar = !this.showSearchBar
     },
-
+    //  navigeert naar de postDate pagina
     navigateToPostDate(userId) {
       this.$router.push({ name: 'postDate', query: { userId } })
     }
@@ -226,11 +226,11 @@ export default {
   .container {
     position: relative;
     font-family: Quicksand-Bold;
-    min-height: 100vh; /* Set a minimum height of 100vh */
+    min-height: 100vh;
     background-color: #f9f6f6;
     max-width: 100vw;
     overflow-x: hidden;
-    overflow-y: auto; /* Add vertical scrolling */
+    overflow-y: auto;
   }
 
   .icon-xmark {

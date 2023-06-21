@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-// import Uploader from 'vue-media-upload'
 
 // Vuetify
 import 'vuetify/dist/vuetify.min.css'

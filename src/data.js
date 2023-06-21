@@ -1,11 +1,13 @@
 // Hier export ik mijn databases, om te gebruiken in mijn components met gebruik van fetch()
 
+// Functie om opties op te halen
 export const fetchOpties = () => {
   return fetch('http://localhost:3000/intresses')
     .then((response) => response.json())
     .catch((error) => console.error('Error fetching data: ', error))
 }
 
+// Functie om gebruikersgegevens op te halen
 export const getUserData = (userId) => {
   return fetch(`http://localhost:3000/users/${userId}`)
     .then((response) => {
@@ -20,6 +22,7 @@ export const getUserData = (userId) => {
     })
 }
 
+// Functie om gebruikersgegevens te verwijderen
 export const deleteUserData = (userId) => {
   return fetch(`http://localhost:3000/users/${userId}`, {
     method: 'DELETE'
@@ -35,6 +38,7 @@ export const deleteUserData = (userId) => {
     })
 }
 
+// Functie om een gebruiker toe te voegen
 export const addUser = (user) => {
   console.log('Adding user:', user)
   return fetch(`http://localhost:3000/users`, {
@@ -51,6 +55,7 @@ export const addUser = (user) => {
     .catch((error) => console.error('Error adding user:', error))
 }
 
+// Functie om gebruikersgegevens bij te werken
 export const updateUserData = (user) => {
   const formData = new FormData()
   formData.append('name', user.name)
@@ -71,6 +76,7 @@ export const updateUserData = (user) => {
     .catch((error) => console.error('Error updating user data:', error))
 }
 
+// Functie om een date toe te voegen
 export const addDate = (date) => {
   console.log('Adding date:', date)
   return fetch(`http://localhost:3000/dates`, {
@@ -78,7 +84,7 @@ export const addDate = (date) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(date) // Use the date object directly
+    body: JSON.stringify(date)
   })
     .then((response) => {
       console.log('Response from adding date:', response)
@@ -87,11 +93,13 @@ export const addDate = (date) => {
     .catch((error) => console.error('Error adding date:', error))
 }
 
+// Functie om de URL van een afbeelding op te halen
 export function getImageURL(picturePath) {
-  const serverURL = 'http://localhost:3000' // Update with your server URL
+  const serverURL = 'http://localhost:3000'
   return `${serverURL}/uploads/${picturePath}`
 }
 
+// Functie om dates op te halen
 export const getDates = () => {
   return fetch('http://localhost:3000/dates')
     .then((response) => {
@@ -102,7 +110,6 @@ export const getDates = () => {
     })
     .then((data) => {
       const datePromises = data.map((date) => {
-        // Fetch the user data using the userId
         return fetch(`http://localhost:3000/users/${date.userId}`)
           .then((response) => {
             if (!response.ok) {
@@ -111,7 +118,6 @@ export const getDates = () => {
             return response.json()
           })
           .then((userData) => {
-            // Combine the date and user data
             return {
               id: date.id,
               user: {
@@ -132,7 +138,6 @@ export const getDates = () => {
           })
       })
 
-      // Wait for all datePromises to resolve
       return Promise.all(datePromises)
     })
     .catch((error) => {
@@ -141,6 +146,7 @@ export const getDates = () => {
     })
 }
 
+// Functie om een date te plaatsen
 export const postDate = (dateData) => {
   const { userId, naamDate, beschrijvingDate, datumDate, tijdDate, locatieDate } = dateData
 
@@ -150,7 +156,7 @@ export const postDate = (dateData) => {
     datumDate: datumDate,
     tijdDate: tijdDate,
     locatieDate: locatieDate,
-    userId: userId // Use the user ID here
+    userId: userId
   }
 
   return fetch('http://localhost:3000/dates', {
@@ -170,9 +176,9 @@ export const postDate = (dateData) => {
       return {
         id: date.id,
         user: {
-          id: userId, // Use the same user ID that was passed in
-          name: null, // Update this with the appropriate user name
-          age: null, // Update this with the appropriate user age
+          id: userId,
+          name: null,
+          age: null,
           picture: null
         },
         name: date.naamDate,
@@ -188,6 +194,7 @@ export const postDate = (dateData) => {
     })
 }
 
+// Functie om een datum op te halen op basis van ID
 export const getDateById = (dateId) => {
   return fetch(`http://localhost:3000/dates/${dateId}`)
     .then((response) => {

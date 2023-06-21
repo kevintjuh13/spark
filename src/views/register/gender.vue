@@ -40,12 +40,13 @@ export default {
   components: { myButton },
   data() {
     return {
-      selectedGender: 0, // Initialize with the index of the default selected gender
+      selectedGender: 0,
       genders: ['Man', 'Vrouw']
     }
   },
 
   methods: {
+    // haalt de data op van de vorige pagina en stuurt dit door naar de show pagina
     async submit() {
       const id = this.$route.query.id
       const name = this.$route.query.name

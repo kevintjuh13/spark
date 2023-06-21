@@ -50,14 +50,12 @@ export default {
     }
   },
   mounted() {
-    const dateId = this.$route.query.dateId // Get the dateId from the query parameters
+    const dateId = this.$route.query.dateId
     this.fetchDateInfo(dateId)
   },
   methods: {
     fetchDateInfo(dateId) {
-      // You need to implement the logic to fetch the date information using the dateId
-      // You can use the getDateById function from '../data.js' or any other method to fetch the data
-      // Example:
+      // dit fetched de date op basis van de user id
       getDateById(dateId)
         .then((dateInfo) => {
           this.dateInfo = dateInfo

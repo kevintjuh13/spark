@@ -6,7 +6,7 @@
     </div>
     <v-flex class="flex mt-10">
       <div class="card-container">
-        <v-card class="card" width="300" height="350">
+        <v-card class="card">
           <img class="avatar-img" :src="user.pictureURL" alt="" />
         </v-card>
         <v-card-title class="mt-3" style="font-size: 30px"
@@ -60,6 +60,7 @@ export default {
     this.user.interest = interest ? interest.split(',') : []
   },
   methods: {
+    // gaat terug naar de myProfile pagina met deze data :
     goBack() {
       const { id, name, age, gender, interest, show, pictureURL } = this.user
       console.log('Interests:', interest)
@@ -83,6 +84,8 @@ export default {
   }
 
   .card {
+    width: 300px;
+    height: 350px;
     border-radius: 20px;
   }
 
@@ -121,8 +124,11 @@ export default {
   }
 
   .card {
+    width: 250px;
+    height: 300px;
     border-radius: 20px;
   }
+
   .avatar-img {
     object-fit: cover;
     width: 100%;

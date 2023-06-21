@@ -64,7 +64,7 @@ export default {
     isDisabled(optie) {
       return !this.isSelected(optie) && this.selectedOptions.length >= 5
     },
-
+    // wanneer de user 5 intresses heeft gekozen word de rest disabled
     toggleOption(optie) {
       if (this.isSelected(optie)) {
         // Deselect the option
@@ -81,7 +81,7 @@ export default {
 
       console.log('Selected chips:', this.selectedOptions)
     },
-
+    // haalt de intresses op uit de intresses table in de database
     fetchOpties() {
       fetchOpties()
         .then((data) => {
@@ -91,7 +91,7 @@ export default {
           console.error(error)
         })
     },
-
+    // haalt de data op van de vorige pagina en stuurt dit door naar de foto pagina
     submitInterests() {
       if (this.selectedOptions.length > 0) {
         const id = this.$route.query.id

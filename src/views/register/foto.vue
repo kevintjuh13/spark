@@ -27,7 +27,7 @@ export default {
   components: { myButton },
   data() {
     return {
-      selectedPicture: null // Variabele om de geselecteerde foto op te slaan
+      selectedPicture: null
     }
   },
   methods: {
@@ -36,7 +36,7 @@ export default {
       this.selectedPicture = event.target.files[0]
     },
     mounted() {
-      // Retrieve the query parameters from the $route object
+      // pakt de parameters van de query
       const id = this.$route.query.id
       const name = this.$route.query.name
       const age = this.$route.query.age
@@ -44,7 +44,6 @@ export default {
       const show = this.$route.query.show
       const interest = this.$route.query.interest
 
-      // Use the retrieved data as needed
       console.log('ID:', id)
       console.log('Name:', name)
       console.log('Age:', age)
@@ -52,16 +51,15 @@ export default {
       console.log('Show:', show)
       console.log('Interest:', interest)
     },
-
+    // haalt de data op van de vorige pagina en stuurt dit door naar de homepagina als 1 geheel
     async submit() {
-      console.log('Picture before update:', this.selectedPicture) // Aangepaste regel
+      console.log('Picture before update:', this.selectedPicture)
 
       const id = this.$route.query.id
       const formData = new FormData()
       formData.append('picture', this.selectedPicture, this.selectedPicture.name)
-      const picture = formData.get('picture') // Haal de foto op uit het FormData-object
+      const picture = formData.get('picture')
 
-      // Voeg de andere gebruikersgegevens toe aan een object
       const user = {
         id: id,
         name: this.$route.query.name,
@@ -69,17 +67,15 @@ export default {
         gender: this.$route.query.gender,
         show: this.$route.query.show,
         interest: this.$route.query.interest,
-        picture: picture // Voeg de foto toe aan het user-object
+        picture: picture
       }
 
       try {
-        // Update de gebruikersgegevens inclusief de foto
         const updatedUser = await updateUserData(user)
         console.log('User updated:', updatedUser)
         const pictureURL = getImageURL(updatedUser.picture)
         console.log('Picture URL:', pictureURL)
 
-        // Ga naar de interesse-pagina met de gebruikersgegevens
         this.$router.push({
           path: '/homePage',
           query: {
@@ -89,7 +85,7 @@ export default {
             gender: user.gender,
             show: user.show,
             interest: user.interest,
-            picture: user.picture, // Add 'pictureURL' as a separate property
+            picture: user.picture,
             pictureURL: pictureURL
           }
         })

@@ -54,6 +54,7 @@ export default {
       password: '',
       errorMessage: '',
       rulesEmail: [
+        // Regels voor validatie van e-mail
         (value) => {
           if (!value) return 'Voer een email in'
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -63,6 +64,7 @@ export default {
       ],
 
       rulesPassword: [
+        // Regels voor validatie van wachtwoord
         (value) => {
           if (!value) return 'Voor een wachtwoord in'
           if (value.length < 8) return 'Wachtwoord moet 8 karakters lang zijn'
@@ -74,6 +76,7 @@ export default {
   },
   computed: {
     isFormValid() {
+      // Controleert of alle validatieregels voor e-mail en wachtwoord zijn doorstaan
       return (
         this.rulesEmail.every((rule) => rule(this.email) === true) &&
         this.rulesPassword.every((rule) => rule(this.password) === true)
@@ -91,6 +94,7 @@ export default {
       try {
         const savedUser = await addUser(user)
         console.log('User saved: ', savedUser)
+        // Navigeert naar de volgende pagina met gebruikersgegevens
         this.$router.push({
           path: '/firstname',
           query: { name: user.name, id: savedUser.id }
@@ -106,7 +110,7 @@ export default {
 <style scoped>
 @import url(../style.css);
 @media only screen and (min-width: 768px) {
-  /* CSS styles for tablet devices */
+  /* CSS-stijlen voor tabletapparaten */
   .textfields {
     width: 250px;
   }

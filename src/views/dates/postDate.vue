@@ -109,6 +109,7 @@ export default {
   },
   computed: {
     time() {
+      // loopt door alle tijden heen
       const timeArray = []
       for (let hour = 0; hour <= 24; hour++) {
         const formattedHour = hour.toString().padStart(2, '0')
@@ -129,10 +130,10 @@ export default {
     this.user.show = userData.show
     this.user.interest = userData.interest
     this.user.pictureURL = userData.pictureURL
-    // Assign other data properties as needed
   },
 
   methods: {
+    // stuurt de user terug naar de home pagina met alle data hieronder weegeven
     goBack() {
       const { id, name, age, gender, interest, show, pictureURL } = this.user
 
@@ -142,6 +143,7 @@ export default {
       })
     },
     async postDate() {
+      // creert een date en stuurt die naar de dates table in de database
       const date = {
         userId: this.user.id,
         naamDate: this.naamDate,

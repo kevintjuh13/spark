@@ -30,6 +30,7 @@ export default {
     }
   },
   methods: {
+    // haalt de data op van de vorige pagina en stuurt dit door naar de age pagina
     async submit() {
       const id = this.$route.query.id
       const user = {
