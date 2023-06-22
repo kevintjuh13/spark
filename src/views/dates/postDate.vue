@@ -81,7 +81,7 @@ export default {
       naamDate: '',
       selectedDate: null,
       selectedTime: null,
-      dates: ['Ma 12 jun', 'Di 13 jun', 'Woe 14 jun', 'Do 15 jun', 'Vr 16 jun'],
+      dates: ['Ma 26 jun', 'Di 27 jun', 'Woe 28 jun', 'Do 29 jun', 'Vr 30 jun'],
       locations: [
         'Tilburg',
         'Breda',

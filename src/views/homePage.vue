@@ -107,12 +107,10 @@
     <div class="navbar-container">
       <div class="flex">
         <v-card class="mb-10 border" width="300" height="40">
-          <router-link class="link" to="/chosen">
-            <v-icon class="ml-7" size="25" icon="fas fa-check"></v-icon>
-          </router-link>
-          <router-link class="link" to="/awaiting">
-            <v-icon class="ml-6" size="25" icon="fas fa-clock"></v-icon>
-          </router-link>
+          <v-icon class="ml-7" size="25" icon="fas fa-check"></v-icon>
+
+          <v-icon class="ml-6" size="25" icon="fas fa-clock"></v-icon>
+
           <router-link :to="{ name: 'postDate', query: userData }">
             <v-icon class="icon" size="25" icon="fas fa-circle-plus"></v-icon>
           </router-link>
