@@ -28,6 +28,12 @@ npm run dev
 npm run build
 ```
 
+### Run the server.js so the database is connected
+
+```sh
+node server.js
+```
+
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh
