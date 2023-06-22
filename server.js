@@ -6,7 +6,7 @@ const multer = require('multer')
 const path = require('path')
 
 const app = express()
-const upload = multer({ dest: 'uploads/' }) // Map waar geüploade foto's worden opgeslagen
+const upload = multer({ dest: 'uploads/' })
 
 // Middleware om JSON request bodies te parsen
 app.use(bodyParser.json())

@@ -28,7 +28,7 @@ npm run dev
 npm run build
 ```
 
-### Run the server.js so the database is connected
+### Run the server.js so the database is connected (modify lines 25 to 29 if necessary)
 
 ```sh
 node server.js
